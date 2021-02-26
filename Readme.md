@@ -5,6 +5,14 @@
 
 Convert CSV files to Apache Arrow.
 
+## Installation
+
+```
+cargo install csv2arrow
+```
+
+## Usage
+
 ```
 USAGE:
     csv2arrow [FLAGS] [OPTIONS] <CSV> [ARROW]
