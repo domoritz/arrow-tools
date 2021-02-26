@@ -1,5 +1,7 @@
 # CSV to Arrow
 
+[![Rust](https://github.com/domoritz/csv2arrow/actions/workflows/rust.yml/badge.svg)](https://github.com/domoritz/csv2arrow/actions/workflows/rust.yml)
+
 Convert CSV files to Apache Arrow.
 
 ```
