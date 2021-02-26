@@ -1,0 +1,12 @@
+[package]
+name = "csv2arrow"
+version = "0.1.0"
+authors = ["Dominik Moritz <domoritz@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+arrow = "3.0.0"
+serde_json = { version = "1.0" }
+clap = "3.0.0-beta.2"
