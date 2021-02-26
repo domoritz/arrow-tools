@@ -2,6 +2,7 @@
 name = "csv2arrow"
 version = "0.1.0"
 authors = ["Dominik Moritz <domoritz@gmail.com>"]
+license = "MIT/Apache-2.0"
 edition = "2018"
 repository = "https://github.com/domoritz/csv2arrow"
 description = "Convert CSV files to Arrow"
