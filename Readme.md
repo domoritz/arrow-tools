@@ -7,6 +7,12 @@ Convert CSV files to Apache Arrow.
 
 ## Installation
 
+### Download prebuilt binaries
+
+You can get the latest releases from https://github.com/domoritz/csv2arrow/releases/.
+
+### With Cargo
+
 ```
 cargo install csv2arrow
 ```
