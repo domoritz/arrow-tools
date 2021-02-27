@@ -5,102 +5,104 @@ on:
     types: [published]
 
 jobs:
-  linux-x86_64:
-    runs-on: ubuntu-latest
+  # adapted from https://github.com/starship/starship/blob/master/.github/workflows/deploy.yml
+
+  github_build:
+    name: Build release binaries
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: csv2arrow-x86_64-unknown-linux-gnu.tar.gz
+
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-x86_64-unknown-linux-musl.tar.gz
+
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-i686-unknown-linux-musl.tar.gz
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-aarch64-unknown-linux-musl.tar.gz
+
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: csv2arrow-arm-unknown-linux-musleabihf.tar.gz
+
+          - target: x86_64-unknown-freebsd
+            os: ubuntu-latest
+            name: csv2arrow-x86_64-unknown-freebsd.tar.gz
+
+          - target: x86_64-apple-darwin
+            os: macOS-latest
+            name: csv2arrow-x86_64-apple-darwin.tar.gz
+
+          - target: aarch64-apple-darwin
+            os: macOS-latest
+            name: csv2arrow-aarch64-apple-darwin.tar.gz
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-x86_64-pc-windows-msvc.zip
+
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-i686-pc-windows-msvc.zip
+
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-aarch64-pc-windows-msvc.zip
+
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: actions-rs/toolchain@v1
+      # Cache files between builds
+      - name: Cache Cargo
+        uses: actions/cache@v2
         with:
-          profile: minimal
-          toolchain: beta
-          default: true
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Build binary
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: beta
+          override: true
+          profile: minimal
+          target: ${{ matrix.target }}
+
+      - name: Build
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --target x86_64-unknown-linux-musl
-          use-cross: true
+          args: --release --target ${{ matrix.target }}
+          use-cross: ${{ matrix.os == 'ubuntu-latest' }}
 
-      - name: Optimize and package binary
+      - name: Prepare artifacts [Windows]
+        if: matrix.os == 'windows-latest'
         run: |
-          cd target/x86_64-unknown-linux-musl/release
-          strip csv2arrow
-          chmod +x csv2arrow
-          tar -c csv2arrow | gzip > csv2arrow.tar.gz
-
-      - name: Upload binary
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          asset_name: csv2arrow-linux-x86_64.tar.gz
-          asset_path: target/x86_64-unknown-linux-musl/release/csv2arrow.tar.gz
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_content_type: application/octet-stream
-
-  macos-x86_64:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: beta
-          default: true
-
-      - name: Build binary
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-          use-cross: true
-
-      - name: Optimize and package binary
+          cd target/${{ matrix.target }}/release
+          strip csv2arrow.exe
+          7z a ../../../${{ matrix.name }} csv2arrow.exe
+          cd -
+      - name: Prepare artifacts [-nix]
+        if: matrix.os != 'windows-latest'
         run: |
-          cd target/release
-          strip csv2arrow
-          chmod +x csv2arrow
-          mkdir dmg
-          mv csv2arrow dmg/
-          hdiutil create -fs HFS+ -srcfolder dmg -volname csv2arrow csv2arrow.dmg
-
-      - name: Upload binary
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          cd target/${{ matrix.target }}/release
+          strip csv2arrow || true
+          tar czvf ../../../${{ matrix.name }} csv2arrow
+          cd -
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
-          asset_name: csv2arrow-macos-x86_64.dmg
-          asset_path: target/release/csv2arrow.dmg
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_content_type: application/octet-stream
-
-  windows-x86_64:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: beta
-          default: true
-
-      - name: Build binary
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-          use-cross: true
-
-      - name: Upload binary
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          asset_name: csv2arrow-windows-x86_64.exe
-          asset_path: target/release/csv2arrow.exe
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_content_type: application/octet-stream
+          name: ${{ matrix.name }}
+          path: ${{ matrix.name }}
