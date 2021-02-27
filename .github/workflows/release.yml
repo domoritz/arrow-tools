@@ -33,10 +33,6 @@ jobs:
             os: ubuntu-latest
             name: csv2arrow-arm-unknown-linux-musleabihf.tar.gz
 
-          - target: x86_64-unknown-freebsd
-            os: ubuntu-latest
-            name: csv2arrow-x86_64-unknown-freebsd.tar.gz
-
           - target: x86_64-apple-darwin
             os: macOS-latest
             name: csv2arrow-x86_64-apple-darwin.tar.gz
