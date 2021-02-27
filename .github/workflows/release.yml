@@ -82,6 +82,9 @@ jobs:
 
       - name: Build
         uses: actions-rs/cargo@v1
+        # TODO: Remove this once it's the default
+        env:
+           SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
         with:
           command: build
           args: --release --target ${{ matrix.target }}
@@ -101,8 +104,12 @@ jobs:
           strip csv2arrow || true
           tar czvf ../../../${{ matrix.name }} csv2arrow
           cd -
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+      - name: Upload binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ matrix.name }}
-          path: ${{ matrix.name }}
+          asset_name: ${{ matrix.name }}
+          asset_path: ${{ matrix.name }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_content_type: application/octet-stream
