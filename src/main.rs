@@ -33,7 +33,7 @@ struct Opts {
     print_schema: bool,
 
     /// Only print the schema
-    #[clap(short='n', long)]
+    #[clap(short = 'n', long)]
     dry: bool,
 }
 
