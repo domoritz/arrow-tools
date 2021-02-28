@@ -39,10 +39,10 @@ fn main() -> Result<(), ArrowError> {
     if opts.print_schema || opts.dry {
         let json = to_string_pretty(&reader.schema().to_json())?;
         eprintln!("Inferred Schema:\n{}", json);
-    }
 
-    if opts.dry {
-        return Ok(());
+        if opts.dry {
+            return Ok(());
+        }
     }
 
     let output = match opts.output {
