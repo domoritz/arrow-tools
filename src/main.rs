@@ -1,0 +1,57 @@
+use arrow::{error::ArrowError, ipc::writer::FileWriter, json::ReaderBuilder};
+use clap::{Clap, ValueHint};
+use serde_json::to_string_pretty;
+use std::io::stdout;
+use std::path::PathBuf;
+use std::{fs::File, io::Write};
+
+#[derive(Clap)]
+#[clap(version = "1.0", author = "Dominik Moritz <domoritz@gmail.com>")]
+struct Opts {
+    /// Input JSON file.
+    #[clap(name = "JSON", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    input: PathBuf,
+
+    /// Output file, stdout if not present.
+    #[clap(name = "ARROW", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    output: Option<PathBuf>,
+
+    /// The number of records to infer the schema from. All rows if not present.
+    #[clap(short, long)]
+    max_read_records: Option<usize>,
+
+    /// Print the schema to stderr.
+    #[clap(short, long)]
+    verbose: bool,
+}
+
+fn main() -> Result<(), ArrowError> {
+    let opts: Opts = Opts::parse();
+
+    let input = File::open(opts.input)?;
+    let builder = ReaderBuilder::new().infer_schema(opts.max_read_records);
+    let mut reader = builder.build(input)?;
+
+    if opts.verbose {
+        let json = to_string_pretty(&reader.schema().to_json())?;
+        eprintln!("Inferred Schema:\n{}", json);
+    }
+
+    let output = match opts.output {
+        Some(ref path) => File::create(path).map(|f| Box::new(f) as Box<dyn Write>)?,
+        None => Box::new(stdout()) as Box<dyn Write>,
+    };
+
+    let mut writer = FileWriter::try_new(output, reader.schema().as_ref())?;
+
+    match reader.next() {
+        Ok(batch) => {
+            if let Some(batch) = batch {
+                writer.write(&batch)?
+            }
+        }
+        Err(error) => return Err(error),
+    }
+
+    Ok(())
+}
