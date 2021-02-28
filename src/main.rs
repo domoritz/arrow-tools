@@ -25,8 +25,8 @@ struct Opts {
     print_schema: bool,
 
     /// Only print the schema
-    #[clap(short='n', long)]
-    dry: bool
+    #[clap(short = 'n', long)]
+    dry: bool,
 }
 
 fn main() -> Result<(), ArrowError> {
