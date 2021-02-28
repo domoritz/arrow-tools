@@ -28,9 +28,10 @@ ARGS:
     <ARROW>    Output file, stdout if not present
 
 FLAGS:
-        --help       Prints help information
-    -v, --verbose    Print the schema to stderr
-    -V, --version    Prints version information
+    -n, --dry             Only print the schema
+        --help            Prints help information
+    -p, --print-schema    Print the schema to stderr
+    -V, --version         Prints version information
 
 OPTIONS:
     -d, --delimiter <delimiter>

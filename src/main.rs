@@ -30,7 +30,11 @@ struct Opts {
 
     /// Print the schema to stderr.
     #[clap(short, long)]
-    verbose: bool,
+    print_schema: bool,
+
+    /// Only print the schema
+    #[clap(short='n', long)]
+    dry: bool,
 }
 
 fn main() -> Result<(), ArrowError> {
@@ -45,9 +49,13 @@ fn main() -> Result<(), ArrowError> {
 
     let reader = builder.build(input)?;
 
-    if opts.verbose {
+    if opts.print_schema || opts.dry {
         let json = to_string_pretty(&reader.schema().to_json())?;
         eprintln!("Inferred Schema:\n{}", json);
+    }
+
+    if opts.dry {
+        return Ok(());
     }
 
     let output = match opts.output {
