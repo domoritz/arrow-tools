@@ -21,11 +21,11 @@ cargo install csv2parquet
 
 ```
 USAGE:
-    csv2parquet [FLAGS] [OPTIONS] <CSV> [PARQUET]
+    csv2parquet [FLAGS] [OPTIONS] <CSV> <PARQUET>
 
 ARGS:
     <CSV>        Input CSV file
-    <PARQUET>    Output file, stdout if not present
+    <PARQUET>    Output file
 
 FLAGS:
         --dictionary      Sets flag to enable/disable dictionary encoding for any column
