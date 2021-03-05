@@ -8,7 +8,7 @@ use parquet::{
 };
 use serde_json::to_string_pretty;
 use std::path::PathBuf;
-use std::{fs::File, usize};
+use std::fs::File;
 
 #[derive(Clap)]
 enum ParquetCompression {
@@ -40,9 +40,9 @@ struct Opts {
     #[clap(name = "CSV", parse(from_os_str), value_hint = ValueHint::AnyPath)]
     input: PathBuf,
 
-    /// Output file, stdout if not present.
+    /// Output file.
     #[clap(name = "PARQUET", parse(from_os_str), value_hint = ValueHint::AnyPath)]
-    output: Option<PathBuf>,
+    output: PathBuf,
 
     /// The number of records to infer the schema from. All rows if not present.
     #[clap(long)]
@@ -126,8 +126,7 @@ fn main() -> Result<(), ParquetError> {
         }
     }
 
-    let path = opts.output.unwrap();
-    let output = File::create(&path).unwrap();
+    let output = File::create(opts.output)?;
 
     let mut props = WriterProperties::builder()
         .set_dictionary_enabled(opts.dictionary)
