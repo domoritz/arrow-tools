@@ -7,8 +7,8 @@ use parquet::{
     file::properties::WriterProperties,
 };
 use serde_json::to_string_pretty;
-use std::path::PathBuf;
 use std::fs::File;
+use std::path::PathBuf;
 
 #[derive(Clap)]
 enum ParquetCompression {
