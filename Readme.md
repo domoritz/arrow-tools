@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/csv2parquet.svg)](https://crates.io/crates/csv2parquet)
 [![Rust](https://github.com/domoritz/csv2parquet/actions/workflows/rust.yml/badge.svg)](https://github.com/domoritz/csv2parquet/actions/workflows/rust.yml)
 
-Convert CSV files to Apache Parquet.
+Convert CSV files to Apache Parquet. You may also be interested in [json2arrow](https://github.com/domoritz/json2arrow) or [csv2arrow](https://github.com/domoritz/csv2arrow).
 
 ## Installation
 
