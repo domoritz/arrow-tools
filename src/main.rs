@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use std::{fs::File, io::Write};
 
 #[derive(Clap)]
-#[clap(version = "1.0", author = "Dominik Moritz <domoritz@gmail.com>")]
+#[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
     /// Input JSON file.
     #[clap(name = "JSON", parse(from_os_str), value_hint = ValueHint::AnyPath)]
