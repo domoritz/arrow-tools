@@ -38,6 +38,16 @@ OPTIONS:
 
 ```
 
+## Limitations
+
+Since we use teh Arrow JSON loader, we are limited to what it supports. Right now, it supports JSON line-delimited files.
+
+```json
+{ "a": 42, "b": true }
+{ "a": 12, "b": false }
+{ "a": 7, "b": true }
+```
+
 ## For Developers
 
 To format the code, run
