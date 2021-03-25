@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/csv2arrow.svg)](https://crates.io/crates/csv2arrow)
 [![Rust](https://github.com/domoritz/csv2arrow/actions/workflows/rust.yml/badge.svg)](https://github.com/domoritz/csv2arrow/actions/workflows/rust.yml)
 
-Convert CSV files to Apache Arrow. You may also be interested in [json2arrow](https://github.com/domoritz/json2arrow) or [csv2parquet](https://github.com/domoritz/csv2parquet).
+Convert CSV files to Apache Arrow. You may also be interested in [json2arrow](https://github.com/domoritz/json2arrow), [csv2parquet](https://github.com/domoritz/csv2parquet), or [json2parquet](https://github.com/domoritz/json2parquet).
 
 ## Installation
 
