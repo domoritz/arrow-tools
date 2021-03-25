@@ -1,4 +1,5 @@
 /target
 *.csv
+*.json
 *.arrow
 *.parquet
