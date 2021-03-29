@@ -197,5 +197,5 @@ fn main() -> Result<(), ParquetError> {
         }
     }
 
-    Ok(())
+    writer.close()
 }
