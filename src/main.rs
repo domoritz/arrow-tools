@@ -186,5 +186,5 @@ fn main() -> Result<(), ParquetError> {
         Err(error) => return Err(error.into()),
     }
 
-    Ok(())
+    writer.close()
 }
