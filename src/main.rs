@@ -177,13 +177,17 @@ fn main() -> Result<(), ParquetError> {
 
     let mut writer = ArrowWriter::try_new(output, reader.schema(), Some(props.build()))?;
 
-    match reader.next() {
-        Ok(batch) => {
-            if let Some(batch) = batch {
-                writer.write(&batch)?
+    loop {
+        match reader.next() {
+            Ok(batch) => {
+                if let Some(batch) = batch {
+                    writer.write(&batch)?
+                } else {
+                    break;
+                }
             }
+            Err(error) => return Err(error.into()),
         }
-        Err(error) => return Err(error.into()),
     }
 
     match writer.close() {
