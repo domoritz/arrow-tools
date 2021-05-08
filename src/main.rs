@@ -52,13 +52,17 @@ fn main() -> Result<(), ArrowError> {
 
     let mut writer = FileWriter::try_new(output, reader.schema().as_ref())?;
 
-    match reader.next() {
-        Ok(batch) => {
-            if let Some(batch) = batch {
-                writer.write(&batch)?
+    loop {
+        match reader.next() {
+            Ok(batch) => {
+                if let Some(batch) = batch {
+                    writer.write(&batch)?
+                } else {
+                    break;
+                }
             }
+            Err(error) => return Err(error),
         }
-        Err(error) => return Err(error),
     }
 
     Ok(())
