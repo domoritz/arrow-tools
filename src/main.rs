@@ -192,6 +192,6 @@ fn main() -> Result<(), ParquetError> {
 
     match writer.close() {
         Ok(_) => Ok(()),
-        Err(error) => return Err(error.into()),
+        Err(error) => Err(error),
     }
 }
