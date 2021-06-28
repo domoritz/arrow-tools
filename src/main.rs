@@ -34,7 +34,7 @@ fn main() -> Result<(), ArrowError> {
 
     let input = File::open(opts.input)?;
     let builder = ReaderBuilder::new().infer_schema(opts.max_read_records);
-    let mut reader = builder.build(input)?;
+    let reader = builder.build(input)?;
 
     if opts.print_schema || opts.dry {
         let json = to_string_pretty(&reader.schema().to_json())?;
@@ -52,15 +52,9 @@ fn main() -> Result<(), ArrowError> {
 
     let mut writer = FileWriter::try_new(output, reader.schema().as_ref())?;
 
-    loop {
-        match reader.next() {
-            Ok(batch) => {
-                if let Some(batch) = batch {
-                    writer.write(&batch)?
-                } else {
-                    break;
-                }
-            }
+    for batch in reader {
+        match batch {
+            Ok(batch) => writer.write(&batch)?,
             Err(error) => return Err(error),
         }
     }
