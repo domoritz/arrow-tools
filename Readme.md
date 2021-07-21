@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/json2parquet.svg)](https://crates.io/crates/json2parquet)
 [![Rust](https://github.com/domoritz/json2parquet/actions/workflows/rust.yml/badge.svg)](https://github.com/domoritz/json2parquet/actions/workflows/rust.yml)
 
-Convert JSON files to Apache Parquet. You may also be interested in [csv2parquet](https://github.com/domoritz/csv2parquet), [json2arrow](https://github.com/domoritz/json2arrow), or [csv2arrow](https://github.com/domoritz/csv2arrow).
+Convert JSON files to [Apache Parquet](https://parquet.apache.org/). You may also be interested in [csv2parquet](https://github.com/domoritz/csv2parquet), [json2arrow](https://github.com/domoritz/json2arrow), or [csv2arrow](https://github.com/domoritz/csv2arrow).
 
 ## Installation
 
