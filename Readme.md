@@ -54,7 +54,9 @@ OPTIONS:
             Set whether the CSV file has headers
 
         --max-read-records <max-read-records>
-            The number of records to infer the schema from. All rows if not present
+            The number of records to infer the schema from. All rows if not present.
+            Setting max-read-records to zero will stop schema inference.  All columns
+            will be string typed.
 
         --max-row-group-size <max-row-group-size>                  Sets max size for a row group
         --max-statistics-size <max-statistics-size>
