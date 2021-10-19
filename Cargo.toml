@@ -12,4 +12,4 @@ description = "Convert CSV files to Arrow"
 [dependencies]
 arrow = "6.0.0"
 serde_json = { version = "1.0" }
-clap = "3.0.0-beta.4"
+clap = "3.0.0-beta.5"

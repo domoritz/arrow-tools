@@ -1,11 +1,11 @@
 use arrow::{csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
-use clap::{Clap, ValueHint};
+use clap::{Parser, ValueHint};
 use serde_json::to_string_pretty;
 use std::io::stdout;
 use std::path::PathBuf;
 use std::{fs::File, io::Write};
 
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
     /// Input CSV file.
