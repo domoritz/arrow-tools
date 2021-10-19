@@ -10,7 +10,7 @@ use serde_json::to_string_pretty;
 use std::fs::File;
 use std::path::PathBuf;
 
-#[derive(clap::ArgEnum)]
+#[derive(clap::ArgEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetCompression {
     UNCOMPRESSED,
@@ -22,7 +22,7 @@ enum ParquetCompression {
     ZSTD,
 }
 
-#[derive(clap::ArgEnum)]
+#[derive(clap::ArgEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetEncoding {
     PLAIN,
