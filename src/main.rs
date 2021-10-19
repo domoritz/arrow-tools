@@ -1,5 +1,5 @@
 use arrow::json::ReaderBuilder;
-use clap::{Clap, ValueHint};
+use clap::{Parser, ValueHint};
 use parquet::{
     arrow::ArrowWriter,
     basic::{Compression, Encoding},
@@ -10,7 +10,7 @@ use serde_json::to_string_pretty;
 use std::fs::File;
 use std::path::PathBuf;
 
-#[derive(clap::ArgEnum)]
+#[derive(clap::ArgEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetCompression {
     UNCOMPRESSED,
@@ -22,7 +22,7 @@ enum ParquetCompression {
     ZSTD,
 }
 
-#[derive(clap::ArgEnum)]
+#[derive(clap::ArgEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetEncoding {
     PLAIN,
@@ -34,7 +34,7 @@ enum ParquetEncoding {
     RLE_DICTIONARY,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
     /// Input JSON file.
