@@ -34,9 +34,9 @@ dependencies = [
 
 [[package]]
 name = "arrow"
-version = "6.0.0"
+version = "6.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "337e668497751234149fd607f5cb41a6ae7b286b6329589126fe67f0ac55d637"
+checksum = "a900a6164aa0abf26d7a6dfea727116a3619456decfbf573e60c7615bf49e84c"
 dependencies = [
  "bitflags",
  "chrono",
