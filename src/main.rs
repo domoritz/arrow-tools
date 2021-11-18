@@ -45,7 +45,7 @@ struct Opts {
     #[clap(name = "PARQUET", parse(from_os_str), value_hint = ValueHint::AnyPath)]
     output: PathBuf,
 
-    /// The number of records to infer the schema from. All rows if not present.
+    /// The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed.
     #[clap(long)]
     max_read_records: Option<usize>,
 
