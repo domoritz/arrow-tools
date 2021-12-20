@@ -21,21 +21,28 @@ cargo install json2arrow
 
 ```
 USAGE:
-    json2arrow [FLAGS] [OPTIONS] <JSON> [ARROW]
+    json2arrow [OPTIONS] <JSON> [ARROW]
 
 ARGS:
     <JSON>     Input JSON file
     <ARROW>    Output file, stdout if not present
 
-FLAGS:
-    -h, --help       Prints help information
-    -v, --verbose    Print the schema to stderr
-    -V, --version    Prints version information
-
 OPTIONS:
-    -m, --max-read-records <max-read-records>
-            The number of records to infer the schema from. All rows if not present
+    -h, --help
+            Print help information
 
+    -m, --max-read-records <MAX_READ_RECORDS>
+            The number of records to infer the schema from. All rows if not present. Setting max-
+            read-records to zero will stop schema inference and all columns will be string typed
+
+    -n, --dry
+            Only print the schema
+
+    -p, --print-schema
+            Print the schema to stderr
+
+    -V, --version
+            Print version information
 ```
 
 ## Limitations
