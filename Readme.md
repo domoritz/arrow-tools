@@ -21,25 +21,34 @@ cargo install csv2arrow
 
 ```
 USAGE:
-    csv2arrow [FLAGS] [OPTIONS] <CSV> [ARROW]
+    csv2arrow [OPTIONS] <CSV> [ARROW]
 
 ARGS:
     <CSV>      Input CSV file
     <ARROW>    Output file, stdout if not present
 
-FLAGS:
-    -n, --dry             Only print the schema
-        --help            Prints help information
-    -p, --print-schema    Print the schema to stderr
-    -V, --version         Prints version information
-
 OPTIONS:
-    -d, --delimiter <delimiter>
+    -d, --delimiter <DELIMITER>
             Set the CSV file's column delimiter as a byte character [default: ,]
 
-    -h, --header <header>                        Set whether the CSV file has headers
-    -m, --max-read-records <max-read-records>
-            The number of records to infer the schema from. All rows if not present
+    -h, --header <HEADER>
+            Set whether the CSV file has headers
+
+        --help
+            Print help information
+
+    -m, --max-read-records <MAX_READ_RECORDS>
+            The number of records to infer the schema from. All rows if not present. Setting max-
+            read-records to zero will stop schema inference and all columns will be string typed
+
+    -n, --dry
+            Only print the schema
+
+    -p, --print-schema
+            Print the schema to stderr
+
+    -V, --version
+            Print version information
 ```
 
 ## For Developers
