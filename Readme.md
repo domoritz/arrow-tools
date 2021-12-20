@@ -21,40 +21,60 @@ cargo install json2parquet
 
 ```
 USAGE:
-    json2parquet [FLAGS] [OPTIONS] <JSON> <PARQUET>
+    json2parquet [OPTIONS] <JSON> <PARQUET>
 
 ARGS:
     <JSON>       Input JSON file
     <PARQUET>    Output file
 
-FLAGS:
-        --dictionary      Sets flag to enable/disable dictionary encoding for any column
-    -n, --dry             Only print the schema
-    -h, --help            Prints help information
-    -p, --print-schema    Print the schema to stderr
-        --statistics      Sets flag to enable/disable statistics for any column
-    -V, --version         Prints version information
-
 OPTIONS:
-    -c, --compression <compression>
+    -c, --compression <COMPRESSION>
             Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4,
             zstd]
 
-        --created-by <created-by>                                  Sets "created by" property
-        --data-pagesize-limit <data-pagesize-limit>                Sets data page size limit
-        --dictionary-pagesize-limit <dictionary-pagesize-limit>    Sets dictionary page size limit
-    -e, --encoding <encoding>
+        --created-by <CREATED_BY>
+            Sets "created by" property
+
+        --data-pagesize-limit <DATA_PAGESIZE_LIMIT>
+            Sets data page size limit
+
+        --dictionary
+            Sets flag to enable/disable dictionary encoding for any column
+
+        --dictionary-pagesize-limit <DICTIONARY_PAGESIZE_LIMIT>
+            Sets dictionary page size limit
+
+    -e, --encoding <ENCODING>
             Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-
             packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
 
-        --max-read-records <max-read-records>
-            The number of records to infer the schema from. All rows if not present
+    -h, --help
+            Print help information
 
-        --max-row-group-size <max-row-group-size>                  Sets max size for a row group
-        --max-statistics-size <max-statistics-size>
+        --max-read-records <MAX_READ_RECORDS>
+            The number of records to infer the schema from. All rows if not present. Setting max-
+            read-records to zero will stop schema inference and all columns will be string typed
+
+        --max-row-group-size <MAX_ROW_GROUP_SIZE>
+            Sets max size for a row group
+
+        --max-statistics-size <MAX_STATISTICS_SIZE>
             Sets max statistics size for any column. Applicable only if statistics are enabled
 
-        --write-batch-size <write-batch-size>                      Sets write batch size
+    -n, --dry
+            Only print the schema
+
+    -p, --print-schema
+            Print the schema to stderr
+
+        --statistics
+            Sets flag to enable/disable statistics for any column
+
+    -V, --version
+            Print version information
+
+        --write-batch-size <WRITE_BATCH_SIZE>
+            Sets write batch size
 ```
 
 ## Limitations
