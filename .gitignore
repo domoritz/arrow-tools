@@ -4,3 +4,4 @@
 *.parquet
 *.py
 *.txt
+*.tsv
