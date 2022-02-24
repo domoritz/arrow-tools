@@ -1,6 +1,6 @@
 [package]
 name = "csv2arrow"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["Dominik Moritz <domoritz@cmu.edu>"]
 license = "MIT/Apache-2.0"
 edition = "2018"
@@ -10,6 +10,6 @@ description = "Convert CSV files to Arrow"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-arrow = "9.0.2"
+arrow = "9.1.0"
 serde_json = "1.0.79"
-clap = { version = "3.1.0", features = ["derive"] }
+clap = { version = "3.1.2", features = ["derive"] }
