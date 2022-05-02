@@ -11,5 +11,5 @@ description = "Convert JSON files to Arrow"
 
 [dependencies]
 arrow = "12.0.0"
-serde_json = "1.0.79"
+serde_json = "1.0.80"
 clap = { version = "3.1.14", features = ["derive"] }
