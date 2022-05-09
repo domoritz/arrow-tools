@@ -13,4 +13,4 @@ description = "Convert JSON files to Parquet"
 parquet = "9.1.0"
 arrow = "9.1.0"
 serde_json = "1.0.80"
-clap = { version = "3.1.14", features = ["derive"] }
+clap = { version = "3.1.17", features = ["derive"] }
