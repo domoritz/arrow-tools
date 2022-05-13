@@ -6,9 +6,10 @@ use parquet::{
     errors::ParquetError,
     file::properties::WriterProperties,
 };
-use serde_json::to_string_pretty;
+use serde_json::{to_string_pretty, Value};
 use std::fs::File;
 use std::path::PathBuf;
+use std::sync::Arc;
 
 #[derive(clap::ArgEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
@@ -44,6 +45,10 @@ struct Opts {
     /// Output file.
     #[clap(name = "PARQUET", parse(from_os_str), value_hint = ValueHint::AnyPath)]
     output: PathBuf,
+
+    /// File with Arrow schema in JSON format.
+    #[clap(short = 's', long, parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    schema_file: Option<PathBuf>,
 
     /// The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed.
     #[clap(long)]
@@ -109,23 +114,61 @@ struct Opts {
 fn main() -> Result<(), ParquetError> {
     let opts: Opts = Opts::parse();
 
-    let input = File::open(opts.input)?;
+    let mut input = File::open(opts.input)?;
 
-    let mut builder = ReaderBuilder::new()
-        .has_header(opts.header.unwrap_or(true))
-        .with_delimiter(opts.delimiter as u8);
-    builder = builder.infer_schema(opts.max_read_records);
-
-    let reader = builder.build(input)?;
+    let schema = match opts.schema_file {
+        Some(schema_def_file_path) => {
+            let schema_file = match File::open(&schema_def_file_path) {
+                Ok(file) => Ok(file),
+                Err(error) => Err(ParquetError::General(format!(
+                    "Error opening schema file: {:?}, message: {}",
+                    schema_def_file_path, error
+                ))),
+            }?;
+            let json: serde_json::Result<Value> = serde_json::from_reader(schema_file);
+            match json {
+                Ok(schema_json) => match arrow::datatypes::Schema::from(&schema_json) {
+                    Ok(schema) => Ok(schema),
+                    Err(error) => Err(error.into()),
+                },
+                Err(err) => Err(ParquetError::General(format!(
+                    "Error reading schema json: {}",
+                    err
+                ))),
+            }
+        }
+        _ => {
+            match arrow::csv::reader::infer_file_schema(
+                &mut input,
+                opts.delimiter as u8,
+                opts.max_read_records,
+                opts.header.unwrap_or(true),
+            ) {
+                Ok((schema, _inferred_has_header)) => Ok(schema),
+                Err(error) => Err(ParquetError::General(format!(
+                    "Error inferring schema: {}",
+                    error
+                ))),
+            }
+        }
+    }?;
 
     if opts.print_schema || opts.dry {
-        let json: String = to_string_pretty(&reader.schema().to_json()).unwrap();
-        eprintln!("Inferred Schema:\n{}", json);
-
+        let json: String = to_string_pretty(&schema.to_json()).unwrap();
+        eprintln!("Schema:");
+        println!("{}", json);
         if opts.dry {
             return Ok(());
         }
     }
+
+    let schema_ref = Arc::new(schema);
+    let builder = ReaderBuilder::new()
+        .has_header(opts.header.unwrap_or(true))
+        .with_delimiter(opts.delimiter as u8)
+        .with_schema(schema_ref);
+
+    let reader = builder.build(input)?;
 
     let output = File::create(opts.output)?;
 
