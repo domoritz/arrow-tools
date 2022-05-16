@@ -3,3 +3,4 @@
 *.json
 *.arrow
 *.parquet
+.idea/
