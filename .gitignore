@@ -1,3 +1,4 @@
 /target
 *.csv
 *.arrow
+.idea/
