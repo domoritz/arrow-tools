@@ -48,8 +48,8 @@ OPTIONS:
             Sets dictionary page size limit
 
     -e, --encoding <ENCODING>
-            Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-
-            packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
+            Sets encoding for any column [possible values: plain, rle, bit-packed,
+            delta-binary-packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
 
     -h, --header <HEADER>
             Set whether the CSV file has headers
@@ -58,8 +58,8 @@ OPTIONS:
             Print help information
 
         --max-read-records <MAX_READ_RECORDS>
-            The number of records to infer the schema from. All rows if not present. Setting max-
-            read-records to zero will stop schema inference and all columns will be string typed
+            The number of records to infer the schema from. All rows if not present. Setting
+            max-read-records to zero will stop schema inference and all columns will be string typed
 
         --max-row-group-size <MAX_ROW_GROUP_SIZE>
             Sets max size for a row group
@@ -73,6 +73,9 @@ OPTIONS:
     -p, --print-schema
             Print the schema to stderr
 
+    -s, --schema-file <SCHEMA_FILE>
+            File with Arrow schema in JSON format
+
         --statistics
             Sets flag to enable/disable statistics for any column
 
@@ -82,6 +85,8 @@ OPTIONS:
         --write-batch-size <WRITE_BATCH_SIZE>
             Sets write batch size
 ```
+
+The --schema-file option uses the same file format as --dry and --print-schema.
 
 ## For Developers
 
