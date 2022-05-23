@@ -38,8 +38,8 @@ OPTIONS:
             Print help information
 
     -m, --max-read-records <MAX_READ_RECORDS>
-            The number of records to infer the schema from. All rows if not present. Setting max-
-            read-records to zero will stop schema inference and all columns will be string typed
+            The number of records to infer the schema from. All rows if not present. Setting
+            max-read-records to zero will stop schema inference and all columns will be string typed
 
     -n, --dry
             Only print the schema
@@ -47,9 +47,14 @@ OPTIONS:
     -p, --print-schema
             Print the schema to stderr
 
+    -s, --schema-file <SCHEMA_FILE>
+            File with Arrow schema in JSON format
+
     -V, --version
             Print version information
 ```
+
+The --schema-file option uses the same file format as --dry and --print-schema.
 
 ## For Developers
 
