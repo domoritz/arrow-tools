@@ -55,11 +55,3 @@ OPTIONS:
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.
-
-## For Developers
-
-To format the code, run
-
-```bash
-cargo clippy && cargo fmt
-```
