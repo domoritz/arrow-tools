@@ -87,20 +87,3 @@ OPTIONS:
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.
-
-## For Developers
-
-To format the code, run
-
-```bash
-cargo clippy && cargo fmt
-```
-
-### Make a release
-
-* bump the version number
-* run `cargo build`
-* create a tagged commit with a tag such as `v0.3.0`
-* push with `git push --tags`
-* run `cargo publish`
-* make a release at https://github.com/domoritz/csv2parquet/releases
