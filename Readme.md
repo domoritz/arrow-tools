@@ -59,11 +59,3 @@ Since we use the Arrow JSON loader, we are limited to what it supports. Right no
 { "a": 12, "b": false }
 { "a": 7, "b": true }
 ```
-
-## For Developers
-
-To format the code, run
-
-```bash
-cargo clippy && cargo fmt
-```
