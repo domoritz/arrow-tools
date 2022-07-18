@@ -3,16 +3,29 @@
 version = 3
 
 [[package]]
-name = "arrow"
-version = "17.0.0"
+name = "ahash"
+version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20f88d9bd22ae87d3d9faa19316b51ebb692a3b402f8a5e02916ad33c2435d2b"
+checksum = "fcb51a0695d8f838b1ee009b3fbf66bda078cd64590202a864a8f3e8c4315c47"
 dependencies = [
+ "getrandom",
+ "once_cell",
+ "version_check",
+]
+
+[[package]]
+name = "arrow"
+version = "18.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5f89d2bc04fa746ee395d20c4cbfa508e4cce5c00bae816f0fae434fcfb9853"
+dependencies = [
+ "ahash",
  "bitflags",
  "chrono",
  "csv",
  "flatbuffers",
  "half",
+ "hashbrown",
  "hex",
  "indexmap",
  "lazy_static",
