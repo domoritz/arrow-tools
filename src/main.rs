@@ -4,7 +4,7 @@ use parquet::{
     arrow::ArrowWriter,
     basic::{Compression, Encoding},
     errors::ParquetError,
-    file::properties::WriterProperties,
+    file::properties::{EnabledStatistics, WriterProperties},
 };
 use serde_json::{to_string_pretty, Value};
 use std::fs::File;
@@ -33,6 +33,14 @@ enum ParquetEncoding {
     DELTA_LENGTH_BYTE_ARRAY,
     DELTA_BYTE_ARRAY,
     RLE_DICTIONARY,
+}
+
+#[derive(clap::ArgEnum, Clone)]
+#[allow(non_camel_case_types, clippy::upper_case_acronyms)]
+enum ParquetEnabledStatistics {
+    None,
+    Chunk,
+    Page,
 }
 
 #[derive(Parser)]
@@ -95,8 +103,8 @@ struct Opts {
     dictionary: bool,
 
     /// Sets flag to enable/disable statistics for any column.
-    #[clap(long)]
-    statistics: bool,
+    #[clap(long, arg_enum)]
+    statistics: Option<ParquetEnabledStatistics>,
 
     /// Sets max statistics size for any column. Applicable only if statistics are enabled.
     #[clap(long)]
@@ -172,9 +180,17 @@ fn main() -> Result<(), ParquetError> {
 
     let output = File::create(opts.output)?;
 
-    let mut props = WriterProperties::builder()
-        .set_dictionary_enabled(opts.dictionary)
-        .set_statistics_enabled(opts.statistics);
+    let mut props = WriterProperties::builder().set_dictionary_enabled(opts.dictionary);
+
+    if let Some(statistics) = opts.statistics {
+        let statistics = match statistics {
+            ParquetEnabledStatistics::Chunk => EnabledStatistics::Chunk,
+            ParquetEnabledStatistics::Page => EnabledStatistics::Page,
+            ParquetEnabledStatistics::None => EnabledStatistics::None,
+        };
+
+        props = props.set_statistics_enabled(statistics);
+    }
 
     if let Some(compression) = opts.compression {
         let compression = match compression {

@@ -76,8 +76,9 @@ OPTIONS:
     -s, --schema-file <SCHEMA_FILE>
             File with Arrow schema in JSON format
 
-        --statistics
-            Sets flag to enable/disable statistics for any column
+        --statistics <STATISTICS>
+            Sets flag to enable/disable statistics for any column [possible values: none, chunk,
+            page]
 
     -V, --version
             Print version information
