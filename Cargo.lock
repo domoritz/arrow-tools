@@ -36,9 +36,9 @@ dependencies = [
 
 [[package]]
 name = "arrow"
-version = "19.0.0"
+version = "20.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89b7e88e4739c3616cae75adce6660c9c1a80f2660545eb77afbe0e4a0f048a0"
+checksum = "c72a69495f06c8abb65b76a87be192a26fa724380d1f292d4e558a32afed9989"
 dependencies = [
  "ahash",
  "bitflags",
@@ -53,8 +53,8 @@ dependencies = [
  "lexical-core",
  "multiversion",
  "num",
- "rand",
  "regex",
+ "regex-syntax",
  "serde",
  "serde_derive",
  "serde_json",
@@ -601,10 +601,11 @@ checksum = "648001efe5d5c0102d8cea768e348da85d90af8ba91f0bea908f157951493cd4"
 
 [[package]]
 name = "parquet"
-version = "19.0.0"
+version = "20.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2cfcf237362047888b342e4f0e213a9b303133b085853e447f2c58e65e00099d"
+checksum = "d0f0af698fcf8d1d9f2971766ebef25821ffe8c39c91837c276dcd97e075d950"
 dependencies = [
+ "ahash",
  "arrow",
  "base64",
  "brotli",
@@ -612,11 +613,13 @@ dependencies = [
  "bytes",
  "chrono",
  "flate2",
+ "hashbrown",
  "lz4",
  "num",
  "num-bigint",
  "parquet-format",
  "rand",
+ "seq-macro",
  "snap",
  "thrift",
  "zstd",
@@ -735,6 +738,12 @@ name = "ryu"
 version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f3f6f92acf49d1b98f7a81226834412ada05458b7364277387724a237f062695"
+
+[[package]]
+name = "seq-macro"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0772c5c30e1a0d91f6834f8e545c69281c099dfa9a3ac58d96a9fd629c8d4898"
 
 [[package]]
 name = "serde"
