@@ -24,5 +24,17 @@ jobs:
       - name: Clippy
         run: cargo clippy
       - name: Check formatting
-        run: |
-          cargo fmt -- --check
+        run: cargo fmt -- --check
+
+  automerge:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3.2.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
