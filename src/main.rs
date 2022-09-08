@@ -115,5 +115,5 @@ fn main() -> Result<(), ArrowError> {
         }
     }
 
-    Ok(())
+    writer.finish()
 }
