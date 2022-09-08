@@ -67,12 +67,6 @@ jobs:
           profile: minimal
           target: ${{ matrix.target }}
 
-      - name: Setup Xcode version
-        if: matrix.os == 'macOS-latest'
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
       - name: Build
         uses: actions-rs/cargo@v1.0.3
         with:
