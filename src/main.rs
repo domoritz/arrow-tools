@@ -82,7 +82,7 @@ fn main() -> Result<(), ArrowError> {
     }?;
 
     if opts.print_schema || opts.dry {
-        let json = serde_json::to_string_pretty(&schema).unwrap();
+        let json = serde_json::to_string_pretty(&schema)?;
         eprintln!("Schema:\n");
         println!("{}", json);
         if opts.dry {
