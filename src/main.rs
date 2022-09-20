@@ -6,7 +6,6 @@ use parquet::{
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
-use serde_json::{to_string_pretty, Value};
 use std::fs::File;
 use std::io::{BufReader, Seek, SeekFrom};
 use std::path::PathBuf;
@@ -126,12 +125,10 @@ fn main() -> Result<(), ParquetError> {
                     schema_def_file_path, error
                 ))),
             }?;
-            let json: serde_json::Result<Value> = serde_json::from_reader(schema_file);
-            match json {
-                Ok(schema_json) => match arrow::datatypes::Schema::from(&schema_json) {
-                    Ok(schema) => Ok(schema),
-                    Err(error) => Err(error.into()),
-                },
+            let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
+                serde_json::from_reader(schema_file);
+            match schema {
+                Ok(schema) => Ok(schema),
                 Err(err) => Err(ParquetError::General(format!(
                     "Error reading schema json: {}",
                     err
@@ -155,7 +152,7 @@ fn main() -> Result<(), ParquetError> {
     }?;
 
     if opts.print_schema || opts.dry {
-        let json = to_string_pretty(&schema.to_json()).unwrap();
+        let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:");
         println!("{}", json);
         if opts.dry {
