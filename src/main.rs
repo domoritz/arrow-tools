@@ -159,7 +159,7 @@ fn main() -> Result<(), ParquetError> {
     }?;
 
     if opts.print_schema || opts.dry {
-        let json: String = serde_json::to_string_pretty(&schema).unwrap();
+        let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:");
         println!("{}", json);
         if opts.dry {
