@@ -1,6 +1,5 @@
 use arrow::{csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
 use clap::{Parser, ValueHint};
-use serde_json::{to_string_pretty, Value};
 use std::io::stdout;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -56,12 +55,10 @@ fn main() -> Result<(), ArrowError> {
                     schema_def_file_path, error
                 ))),
             }?;
-            let json: serde_json::Result<Value> = serde_json::from_reader(schema_file);
-            match json {
-                Ok(schema_json) => match arrow::datatypes::Schema::from(&schema_json) {
-                    Ok(schema) => Ok(schema),
-                    Err(error) => Err(error),
-                },
+            let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
+                serde_json::from_reader(schema_file);
+            match schema {
+                Ok(schema) => Ok(schema),
                 Err(err) => Err(ArrowError::SchemaError(format!(
                     "Error reading schema json: {}",
                     err
@@ -85,7 +82,7 @@ fn main() -> Result<(), ArrowError> {
     }?;
 
     if opts.print_schema || opts.dry {
-        let json = to_string_pretty(&schema.to_json())?;
+        let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:\n");
         println!("{}", json);
         if opts.dry {

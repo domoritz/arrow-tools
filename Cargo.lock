@@ -26,11 +26,12 @@ dependencies = [
 
 [[package]]
 name = "arrow"
-version = "22.0.0"
+version = "23.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c5936b4185aa57cb9790d8742aab22859045ce5cc6a3023796240cd101c19335"
+checksum = "fedc767fbaa36ea50f086215f54f1a007d22046fc4754b0448c657bcbe9f8413"
 dependencies = [
  "ahash",
+ "arrow-buffer",
  "bitflags",
  "chrono",
  "csv",
@@ -46,6 +47,16 @@ dependencies = [
  "regex-syntax",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "arrow-buffer"
+version = "23.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d290050c6e12a81a24ad08525cef2203c4156a6350f75508d49885d677e88ea9"
+dependencies = [
+ "half",
+ "num",
 ]
 
 [[package]]
@@ -240,6 +251,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ad6a9459c9c30b177b925162351f97e7d967c7ea8bab3b8352805327daf45554"
 dependencies = [
  "crunchy",
+ "num-traits",
 ]
 
 [[package]]
@@ -385,6 +397,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8371e4e5341c3a96db127eb2465ac681ced4c433e01dd0e938adbef26ba93ba5"
 
 [[package]]
+name = "libm"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "292a948cd991e376cf75541fe5b97a1081d713c618b4f1b9500f8844e49eb565"
+
+[[package]]
 name = "log"
 version = "0.4.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -493,6 +511,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "578ede34cf02f8924ab9447f50c28075b4d3e5b269972345e7e0372b38c6cdcd"
 dependencies = [
  "autocfg",
+ "libm",
 ]
 
 [[package]]
