@@ -20,32 +20,25 @@ cargo install json2arrow
 ## Usage
 
 ```
-USAGE:
-    json2arrow [OPTIONS] <JSON> [ARROW]
+Usage: json2arrow [OPTIONS] <JSON> [ARROW]
 
-ARGS:
-    <JSON>     Input JSON file
-    <ARROW>    Output file, stdout if not present
+Arguments:
+  <JSON>   Input JSON file
+  [ARROW]  Output file, stdout if not present
 
-OPTIONS:
-    -h, --help
-            Print help information
-
-    -m, --max-read-records <MAX_READ_RECORDS>
-            The number of records to infer the schema from. All rows if not present. Setting
-            max-read-records to zero will stop schema inference and all columns will be string typed
-
-    -n, --dry
-            Only print the schema
-
-    -p, --print-schema
-            Print the schema to stderr
-
-    -s, --schema-file <SCHEMA_FILE>
-            File with Arrow schema in JSON format
-
-    -V, --version
-            Print version information
+Options:
+  -s, --schema-file <SCHEMA_FILE>
+          File with Arrow schema in JSON format
+  -m, --max-read-records <MAX_READ_RECORDS>
+          The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed
+  -p, --print-schema
+          Print the schema to stderr
+  -n, --dry
+          Only print the schema
+  -h, --help
+          Print help information
+  -V, --version
+          Print version information
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.
