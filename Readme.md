@@ -20,38 +20,29 @@ cargo install csv2arrow
 ## Usage
 
 ```
-USAGE:
-    csv2arrow [OPTIONS] <CSV> [ARROW]
+Usage: csv2arrow [OPTIONS] <CSV> [ARROW]
 
-ARGS:
-    <CSV>      Input CSV file
-    <ARROW>    Output file, stdout if not present
+Arguments:
+  <CSV>    Input CSV file
+  [ARROW]  Output file, stdout if not present
 
-OPTIONS:
-    -d, --delimiter <DELIMITER>
-            Set the CSV file's column delimiter as a byte character [default: ,]
-
-    -h, --header <HEADER>
-            Set whether the CSV file has headers
-
-        --help
-            Print help information
-
-    -m, --max-read-records <MAX_READ_RECORDS>
-            The number of records to infer the schema from. All rows if not present. Setting
-            max-read-records to zero will stop schema inference and all columns will be string typed
-
-    -n, --dry
-            Only print the schema
-
-    -p, --print-schema
-            Print the schema to stderr
-
-    -s, --schema-file <SCHEMA_FILE>
-            File with Arrow schema in JSON format
-
-    -V, --version
-            Print version information
+Options:
+  -s, --schema-file <SCHEMA_FILE>
+          File with Arrow schema in JSON format
+  -m, --max-read-records <MAX_READ_RECORDS>
+          The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed
+      --header <HEADER>
+          Set whether the CSV file has headers [possible values: true, false]
+  -d, --delimiter <DELIMITER>
+          Set the CSV file's column delimiter as a byte character [default: ,]
+  -p, --print-schema
+          Print the schema to stderr
+  -n, --dry
+          Only print the schema
+  -h, --help
+          Print help information
+  -V, --version
+          Print version information
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.

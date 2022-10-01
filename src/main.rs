@@ -9,15 +9,15 @@ use std::{fs::File, io::Write};
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
     /// Input CSV file.
-    #[clap(name = "CSV", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(name = "CSV", value_parser, value_hint = ValueHint::AnyPath)]
     input: PathBuf,
 
     /// Output file, stdout if not present.
-    #[clap(name = "ARROW", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(name = "ARROW", value_parser, value_hint = ValueHint::AnyPath)]
     output: Option<PathBuf>,
 
     /// File with Arrow schema in JSON format.
-    #[clap(short = 's', long, parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(short = 's', long, value_parser, value_hint = ValueHint::AnyPath)]
     schema_file: Option<PathBuf>,
 
     /// The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed.
@@ -25,7 +25,7 @@ struct Opts {
     max_read_records: Option<usize>,
 
     /// Set whether the CSV file has headers
-    #[clap(short, long)]
+    #[clap(long)]
     header: Option<bool>,
 
     /// Set the CSV file's column delimiter as a byte character.
