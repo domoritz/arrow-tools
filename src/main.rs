@@ -11,7 +11,7 @@ use std::io::{BufReader, Seek, SeekFrom};
 use std::path::PathBuf;
 use std::sync::Arc;
 
-#[derive(clap::ArgEnum, Clone)]
+#[derive(clap::ValueEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetCompression {
     UNCOMPRESSED,
@@ -23,7 +23,7 @@ enum ParquetCompression {
     ZSTD,
 }
 
-#[derive(clap::ArgEnum, Clone)]
+#[derive(clap::ValueEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetEncoding {
     PLAIN,
@@ -35,7 +35,7 @@ enum ParquetEncoding {
     RLE_DICTIONARY,
 }
 
-#[derive(clap::ArgEnum, Clone)]
+#[derive(clap::ValueEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetEnabledStatistics {
     None,
@@ -47,15 +47,15 @@ enum ParquetEnabledStatistics {
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
     /// Input JSON file.
-    #[clap(name = "JSON", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(name = "JSON", value_parser, value_hint = ValueHint::AnyPath)]
     input: PathBuf,
 
     /// Output file.
-    #[clap(name = "PARQUET", parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(name = "PARQUET", value_parser, value_hint = ValueHint::AnyPath)]
     output: PathBuf,
 
     /// File with Arrow schema in JSON format.
-    #[clap(short = 's', long, parse(from_os_str), value_hint = ValueHint::AnyPath)]
+    #[clap(short = 's', long, value_parser, value_hint = ValueHint::AnyPath)]
     schema_file: Option<PathBuf>,
 
     /// The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed.
@@ -63,11 +63,11 @@ struct Opts {
     max_read_records: Option<usize>,
 
     /// Set the compression.
-    #[clap(short, long, arg_enum)]
+    #[clap(short, long, value_parser)]
     compression: Option<ParquetCompression>,
 
     /// Sets encoding for any column.
-    #[clap(short, long, arg_enum)]
+    #[clap(short, long, value_parser)]
     encoding: Option<ParquetEncoding>,
 
     /// Sets data page size limit.
@@ -95,7 +95,7 @@ struct Opts {
     dictionary: bool,
 
     /// Sets flag to enable/disable statistics for any column.
-    #[clap(long, arg_enum)]
+    #[clap(long, value_parser)]
     statistics: Option<ParquetEnabledStatistics>,
 
     /// Sets max statistics size for any column. Applicable only if statistics are enabled.
