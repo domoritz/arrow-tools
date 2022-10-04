@@ -10,7 +10,7 @@ description = "Convert CSV files to Parquet"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-parquet = "23.0.0"
-arrow = "23.0.0"
+parquet = "24.0.0"
+arrow = "24.0.0"
 serde_json = "1.0.85"
 clap = { version = "4.0.7", features = ["derive"] }
