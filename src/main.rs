@@ -74,7 +74,7 @@ fn main() -> Result<(), ArrowError> {
     }?;
 
     if opts.print_schema || opts.dry {
-        let json = serde_json::to_string_pretty(&schema)?;
+        let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:");
         println!("{}", json);
         if opts.dry {
