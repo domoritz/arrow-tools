@@ -13,4 +13,4 @@ description = "Convert CSV files to Arrow"
 arrow = "25.0.0"
 arrow-schema = { version = "25.0.0", features = ["serde"] }
 serde_json = "1.0.87"
-clap = { version = "4.0.7", features = ["derive"] }
+clap = { version = "4.0.18", features = ["derive"] }
