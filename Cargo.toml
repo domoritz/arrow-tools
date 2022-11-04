@@ -10,7 +10,7 @@ description = "Convert CSV files to Arrow"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-arrow = "25.0.0"
-arrow-schema = { version = "25.0.0", features = ["serde"] }
+arrow = "26.0.0"
+arrow-schema = { version = "26.0.0", features = ["serde"] }
 serde_json = "1.0.87"
 clap = { version = "4.0.18", features = ["derive"] }
