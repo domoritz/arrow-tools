@@ -21,6 +21,7 @@ enum ParquetCompression {
     BROTLI,
     LZ4,
     ZSTD,
+    LZ4_RAW,
 }
 
 #[derive(clap::ValueEnum, Clone)]
@@ -187,6 +188,7 @@ fn main() -> Result<(), ParquetError> {
             ParquetCompression::BROTLI => Compression::BROTLI,
             ParquetCompression::LZ4 => Compression::LZ4,
             ParquetCompression::ZSTD => Compression::ZSTD,
+            ParquetCompression::LZ4_RAW => Compression::LZ4_RAW,
         };
 
         props = props.set_compression(compression);
