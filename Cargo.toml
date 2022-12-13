@@ -10,7 +10,7 @@ description = "Convert JSON files to Arrow"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-arrow = "28.0.0"
-arrow-schema = { version = "28.0.0", features = ["serde"] }
+arrow = "29.0.0"
+arrow-schema = { version = "29.0.0", features = ["serde"] }
 serde_json = "1.0.89"
 clap = { version = "4.0.26", features = ["derive"] }
