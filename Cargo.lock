@@ -391,7 +391,7 @@ dependencies = [
 
 [[package]]
 name = "csv2arrow"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "arrow",
  "arrow-schema",
