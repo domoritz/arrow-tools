@@ -56,9 +56,9 @@ dependencies = [
 
 [[package]]
 name = "arrow"
-version = "30.0.0"
+version = "30.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0069bc5c7432d1bae0389bf69e4624477bb08fd791406f72bf2130515b5ab7f1"
+checksum = "1948f504d736dc6f71ea33773c5c7475998c44925be5321e9d18087a626845f5"
 dependencies = [
  "ahash",
  "arrow-arith",
@@ -228,9 +228,9 @@ dependencies = [
 
 [[package]]
 name = "arrow-schema"
-version = "30.0.0"
+version = "30.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f6023c3d1ebd6baadf6c00f91b1c780203052036392ef85577ca761299c0420"
+checksum = "a99dcc494fe6224e5ece572c5935d5109120a71df06bd8e04c4e23ac14dd8fac"
 dependencies = [
  "serde",
 ]
@@ -897,9 +897,9 @@ checksum = "9ff7415e9ae3fff1225851df9e0d9e4e5479f947619774677a63572e55e80eff"
 
 [[package]]
 name = "parquet"
-version = "30.0.0"
+version = "30.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cafbdb07468f96c468f0c6e5b108485872f974f22f2e1bee899210e65e2c81f3"
+checksum = "4bba2a7630d2946f9e2020225062ad5619d70320e06dae6ae1074febf4c4e932"
 dependencies = [
  "ahash",
  "arrow-array",
