@@ -96,16 +96,19 @@ Below is an example of the `schema-file` content:
       "data_type": "Utf8",
       "nullable": false,
       "dict_id": 0,
-      "dict_is_ordered": false
+      "dict_is_ordered": false,
+      "metadata": {}
     },
     {
       "name": " col2",
       "data_type": "Utf8",
       "nullable": false,
       "dict_id": 0,
-      "dict_is_ordered": false
+      "dict_is_ordered": false,
+      "metadata": {}
     }
-  ]
+  ],
+  " metadata": {}
 }
 ```
 
