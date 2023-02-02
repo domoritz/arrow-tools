@@ -6,6 +6,6 @@ A collection of handy CLI tools to convert CSV and JSON to Apache Arrow and Parq
 
 This reporsitory contains four projects:
 * [`csv2arrow`](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2arrow) to convert CSV files to Apache Arrow.
+* [`csv2parquet`](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet) to convert CSV files to Parquet.
 * [`json2arrow`](https://github.com/domoritz/arrow-tools/tree/main/crates/json2arrow) to convert JSON files to Apache Arrow.
-* [`cav2parquet`](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet) to convert CSV files to Parquet.
 * [`json2parquet`](https://github.com/domoritz/arrow-tools/tree/main/crates/json2parquet) to convert JSON files to Parquet.

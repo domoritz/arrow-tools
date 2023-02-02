@@ -16,6 +16,14 @@ You can get the latest releases from https://github.com/domoritz/json2arrow/rele
 cargo install json2arrow
 ```
 
+## With [Cargo B(inary)Install](https://github.com/cargo-bins/cargo-binstall)
+
+To avoid re-compilation and speed up installation, you can install this tool with `cargo binstall`:
+
+```
+cargo binstall json2arrow
+```
+
 ## Usage
 
 ```

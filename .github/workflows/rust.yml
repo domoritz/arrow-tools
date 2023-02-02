@@ -1,4 +1,3 @@
-# loosly based on https://github.com/dtolnay/anyhow/blob/master/.github/workflows/ci.yml
 name: Rust
 
 on:
