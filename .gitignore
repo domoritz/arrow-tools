@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **/*.rs.bk
 .DS_Store
 /target
@@ -7,4 +8,9 @@
 *.py
 *.txt
 *.tsv
+=======
+/target
+*.json
+*.arrow
+>>>>>>> json2arrow/main
 .idea/

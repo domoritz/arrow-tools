@@ -16,6 +16,7 @@ jobs:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
 <<<<<<< HEAD
+<<<<<<< HEAD
             name: csv2arrow-x86_64-unknown-linux-gnu.tar.gz
 
           - target: x86_64-unknown-linux-musl
@@ -92,6 +93,45 @@ jobs:
             os: windows-latest
             name: csv2parquet-aarch64-pc-windows-msvc.zip
 >>>>>>> csv2parquet/main
+=======
+            name: json2arrow-x86_64-unknown-linux-gnu.tar.gz
+
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            name: json2arrow-x86_64-unknown-linux-musl.tar.gz
+
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            name: json2arrow-i686-unknown-linux-musl.tar.gz
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            name: json2arrow-aarch64-unknown-linux-musl.tar.gz
+
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: json2arrow-arm-unknown-linux-musleabihf.tar.gz
+
+          - target: x86_64-apple-darwin
+            os: macOS-latest
+            name: json2arrow-x86_64-apple-darwin.tar.gz
+
+          - target: aarch64-apple-darwin
+            os: macOS-latest
+            name: json2arrow-aarch64-apple-darwin.tar.gz
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: json2arrow-x86_64-pc-windows-msvc.zip
+
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: json2arrow-i686-pc-windows-msvc.zip
+
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+            name: json2arrow-aarch64-pc-windows-msvc.zip
+>>>>>>> json2arrow/main
 
     runs-on: ${{ matrix.os }}
     continue-on-error: true
@@ -119,17 +159,23 @@ jobs:
         run: |
           cd target/${{ matrix.target }}/release
 <<<<<<< HEAD
+<<<<<<< HEAD
           strip csv2arrow.exe
           7z a ../../../${{ matrix.name }} csv2arrow.exe
 =======
           strip csv2parquet.exe
           7z a ../../../${{ matrix.name }} csv2parquet.exe
 >>>>>>> csv2parquet/main
+=======
+          strip json2arrow.exe
+          7z a ../../../${{ matrix.name }} json2arrow.exe
+>>>>>>> json2arrow/main
           cd -
       - name: Prepare artifacts [-nix]
         if: matrix.os != 'windows-latest'
         run: |
           cd target/${{ matrix.target }}/release
+<<<<<<< HEAD
 <<<<<<< HEAD
           strip csv2arrow || true
           tar czvf ../../../${{ matrix.name }} csv2arrow
@@ -137,6 +183,10 @@ jobs:
           strip csv2parquet || true
           tar czvf ../../../${{ matrix.name }} csv2parquet
 >>>>>>> csv2parquet/main
+=======
+          strip json2arrow || true
+          tar czvf ../../../${{ matrix.name }} json2arrow
+>>>>>>> json2arrow/main
           cd -
       - name: Upload binary
         uses: actions/upload-release-asset@v1
