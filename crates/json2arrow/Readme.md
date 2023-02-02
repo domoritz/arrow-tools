@@ -8,7 +8,7 @@ Convert JSON files to Apache Arrow. This package is part of [Arrow CLI tools](ht
 
 ### Download prebuilt binaries
 
-You can get the latest releases from https://github.com/domoritz/json2arrow/releases/.
+You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
 ### With Cargo
 

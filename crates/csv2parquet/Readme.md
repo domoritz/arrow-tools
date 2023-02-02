@@ -8,7 +8,7 @@ Convert CSV files to [Apache Parquet](https://parquet.apache.org/). This package
 
 ### Download prebuilt binaries
 
-You can get the latest releases from https://github.com/domoritz/csv2parquet/releases/.
+You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
 ### With Cargo
 

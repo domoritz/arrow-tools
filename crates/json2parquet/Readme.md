@@ -8,7 +8,7 @@ Convert JSON files to [Apache Parquet](https://parquet.apache.org/). This packag
 
 ### Download prebuilt binaries
 
-You can get the latest releases from https://github.com/domoritz/json2parquet/releases/.
+You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
 ### With Cargo
 

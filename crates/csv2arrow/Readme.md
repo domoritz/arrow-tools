@@ -8,12 +8,12 @@ Convert CSV files to Apache Arrow. This package is part of [Arrow CLI tools](htt
 
 ### Download prebuilt binaries
 
-You can get the latest releases from https://github.com/domoritz/csv2parquet/releases/.
+You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
 ### With Cargo
 
 ```
-cargo install csv2parquet
+cargo install csv2arrow
 ```
 
 ## With [Cargo B(inary)Install](https://github.com/cargo-bins/cargo-binstall)
@@ -21,7 +21,7 @@ cargo install csv2parquet
 To avoid re-compilation and speed up installation, you can install this tool with `cargo binstall`:
 
 ```
-cargo binstall csv2parquet
+cargo binstall csv2arrow
 ```
 
 ## Usage
