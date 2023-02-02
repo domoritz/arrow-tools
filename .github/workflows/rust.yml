@@ -1,17 +1,8 @@
+# loosly based on https://github.com/dtolnay/anyhow/blob/master/.github/workflows/ci.yml
 name: Rust
 
 on:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   workflow_dispatch:
->>>>>>> csv2parquet/main
-=======
->>>>>>> json2arrow/main
-=======
-  workflow_dispatch:
->>>>>>> json2parquet/main
   push:
     branches: [main]
   pull_request:
@@ -27,11 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: beta
-      - name: Build
-        run: cargo build --verbose
+          components: clippy, rust-src
+      - name: Check
+        run: cargo check
       - name: Clippy
         run: cargo clippy
       - name: Check formatting
