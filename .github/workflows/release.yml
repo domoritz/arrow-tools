@@ -1,0 +1,99 @@
+name: Release Binaries
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # adapted from https://github.com/starship/starship/blob/master/.github/workflows/deploy.yml
+
+  github_build:
+    name: Build release binaries
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: csv2arrow-x86_64-unknown-linux-gnu.tar.gz
+
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-x86_64-unknown-linux-musl.tar.gz
+
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-i686-unknown-linux-musl.tar.gz
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2arrow-aarch64-unknown-linux-musl.tar.gz
+
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: csv2arrow-arm-unknown-linux-musleabihf.tar.gz
+
+          - target: x86_64-apple-darwin
+            os: macOS-latest
+            name: csv2arrow-x86_64-apple-darwin.tar.gz
+
+          - target: aarch64-apple-darwin
+            os: macOS-latest
+            name: csv2arrow-aarch64-apple-darwin.tar.gz
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-x86_64-pc-windows-msvc.zip
+
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-i686-pc-windows-msvc.zip
+
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+            name: csv2arrow-aarch64-pc-windows-msvc.zip
+
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: beta
+          override: true
+          profile: minimal
+          target: ${{ matrix.target }}
+
+      - name: Build
+        uses: actions-rs/cargo@v1.0.3
+        with:
+          command: build
+          args: --release --locked --target ${{ matrix.target }}
+          use-cross: ${{ matrix.os == 'ubuntu-latest' }}
+
+      - name: Prepare artifacts [Windows]
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          strip csv2arrow.exe
+          7z a ../../../${{ matrix.name }} csv2arrow.exe
+          cd -
+      - name: Prepare artifacts [-nix]
+        if: matrix.os != 'windows-latest'
+        run: |
+          cd target/${{ matrix.target }}/release
+          strip csv2arrow || true
+          tar czvf ../../../${{ matrix.name }} csv2arrow
+          cd -
+      - name: Upload binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: ${{ matrix.name }}
+          asset_path: ${{ matrix.name }}
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_content_type: application/octet-stream
