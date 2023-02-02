@@ -15,3 +15,9 @@ Please make sure that your code is formatted correctly and passes some automated
 ```bash
 cargo clippy && cargo fmt
 ```
+
+## Making a release
+
+We use [`cargo-release`](https://github.com/crate-ci/cargo-release/tree/master) to make releases, which you can install with `cargo binstall cargo-release` or `cargo install cargo-release`.
+
+The run `cargo release LEVEL` such as `cargo release minor` as a dry run. When everything works, add `--execute`.
