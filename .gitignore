@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 **/*.rs.bk
 .DS_Store
 /target
@@ -13,4 +14,11 @@
 *.json
 *.arrow
 >>>>>>> json2arrow/main
+=======
+/target
+*.csv
+*.json
+*.arrow
+*.parquet
+>>>>>>> json2parquet/main
 .idea/

@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+  "crates/csv2arrow",
+  "crates/csv2parquet",
+  "crates/json2arrow",
+  "crates/json2parquet",
+]

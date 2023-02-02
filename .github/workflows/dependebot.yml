@@ -13,6 +13,7 @@ jobs:
         with:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           dependencies: arrow, arrow-schema
 =======
           dependencies: arrow, arrow-schema, parquet
@@ -20,6 +21,9 @@ jobs:
 =======
           dependencies: arrow, arrow-schema
 >>>>>>> json2arrow/main
+=======
+          dependencies: arrow, arrow-schema, parquet
+>>>>>>> json2parquet/main
           package_managers: cargo
           directory: /
           branch: main

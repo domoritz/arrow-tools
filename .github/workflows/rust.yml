@@ -3,11 +3,15 @@ name: Rust
 on:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   workflow_dispatch:
 >>>>>>> csv2parquet/main
 =======
 >>>>>>> json2arrow/main
+=======
+  workflow_dispatch:
+>>>>>>> json2parquet/main
   push:
     branches: [main]
   pull_request:
