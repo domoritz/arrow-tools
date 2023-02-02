@@ -13,3 +13,5 @@ inherits = "release"
 debug = true
 split-debuginfo = "packed"
 
+[workspace.metadata.release]
+shared-version = true
