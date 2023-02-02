@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 /target/
 **/*.rs.bk
 *.csv
 *.arrow
 .idea/
 .DS_Store
+=======
+/target
+*.csv
+*.arrow
+*.parquet
+*.py
+*.txt
+*.tsv
+
+.idea/
+>>>>>>> csv2parquet/main

@@ -1,6 +1,10 @@
 name: Rust
 
 on:
+<<<<<<< HEAD
+=======
+  workflow_dispatch:
+>>>>>>> csv2parquet/main
   push:
     branches: [main]
   pull_request:

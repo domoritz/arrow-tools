@@ -15,6 +15,7 @@ jobs:
         include:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
+<<<<<<< HEAD
             name: csv2arrow-x86_64-unknown-linux-gnu.tar.gz
 
           - target: x86_64-unknown-linux-musl
@@ -52,6 +53,45 @@ jobs:
           - target: aarch64-pc-windows-msvc
             os: windows-latest
             name: csv2arrow-aarch64-pc-windows-msvc.zip
+=======
+            name: csv2parquet-x86_64-unknown-linux-gnu.tar.gz
+
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2parquet-x86_64-unknown-linux-musl.tar.gz
+
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2parquet-i686-unknown-linux-musl.tar.gz
+
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            name: csv2parquet-aarch64-unknown-linux-musl.tar.gz
+
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: csv2parquet-arm-unknown-linux-musleabihf.tar.gz
+
+          - target: x86_64-apple-darwin
+            os: macOS-latest
+            name: csv2parquet-x86_64-apple-darwin.tar.gz
+
+          - target: aarch64-apple-darwin
+            os: macOS-latest
+            name: csv2parquet-aarch64-apple-darwin.tar.gz
+
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: csv2parquet-x86_64-pc-windows-msvc.zip
+
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: csv2parquet-i686-pc-windows-msvc.zip
+
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+            name: csv2parquet-aarch64-pc-windows-msvc.zip
+>>>>>>> csv2parquet/main
 
     runs-on: ${{ matrix.os }}
     continue-on-error: true
@@ -78,15 +118,25 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd target/${{ matrix.target }}/release
+<<<<<<< HEAD
           strip csv2arrow.exe
           7z a ../../../${{ matrix.name }} csv2arrow.exe
+=======
+          strip csv2parquet.exe
+          7z a ../../../${{ matrix.name }} csv2parquet.exe
+>>>>>>> csv2parquet/main
           cd -
       - name: Prepare artifacts [-nix]
         if: matrix.os != 'windows-latest'
         run: |
           cd target/${{ matrix.target }}/release
+<<<<<<< HEAD
           strip csv2arrow || true
           tar czvf ../../../${{ matrix.name }} csv2arrow
+=======
+          strip csv2parquet || true
+          tar czvf ../../../${{ matrix.name }} csv2parquet
+>>>>>>> csv2parquet/main
           cd -
       - name: Upload binary
         uses: actions/upload-release-asset@v1
