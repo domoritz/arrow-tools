@@ -1,9 +1,8 @@
 # CSV to Parquet
 
 [![Crates.io](https://img.shields.io/crates/v/csv2parquet.svg)](https://crates.io/crates/csv2parquet)
-[![Rust](https://github.com/domoritz/csv2parquet/actions/workflows/rust.yml/badge.svg)](https://github.com/domoritz/csv2parquet/actions/workflows/rust.yml)
 
-Convert CSV files to [Apache Parquet](https://parquet.apache.org/). You may also be interested in [json2parquet](https://github.com/domoritz/json2parquet), [csv2arrow](https://github.com/domoritz/csv2arrow), or [json2arrow](https://github.com/domoritz/json2arrow).
+Convert CSV files to [Apache Parquet](https://parquet.apache.org/). This package is part of [Arrow CLI tools](https://github.com/domoritz/arrow-tools).
 
 ## Installation
 
