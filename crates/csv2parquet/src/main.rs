@@ -128,8 +128,7 @@ fn main() -> Result<(), ParquetError> {
             let schema_file = match File::open(&schema_def_file_path) {
                 Ok(file) => Ok(file),
                 Err(error) => Err(ParquetError::General(format!(
-                    "Error opening schema file: {:?}, message: {}",
-                    schema_def_file_path, error
+                    "Error opening schema file: {schema_def_file_path:?}, message: {error}"
                 ))),
             }?;
             let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
@@ -137,8 +136,7 @@ fn main() -> Result<(), ParquetError> {
             match schema {
                 Ok(schema) => Ok(schema),
                 Err(err) => Err(ParquetError::General(format!(
-                    "Error reading schema json: {}",
-                    err
+                    "Error reading schema json: {err}"
                 ))),
             }
         }
@@ -151,8 +149,7 @@ fn main() -> Result<(), ParquetError> {
             ) {
                 Ok((schema, _inferred_has_header)) => Ok(schema),
                 Err(error) => Err(ParquetError::General(format!(
-                    "Error inferring schema: {}",
-                    error
+                    "Error inferring schema: {error}"
                 ))),
             }
         }
@@ -161,7 +158,7 @@ fn main() -> Result<(), ParquetError> {
     if opts.print_schema || opts.dry {
         let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:");
-        println!("{}", json);
+        println!("{json}");
         if opts.dry {
             return Ok(());
         }

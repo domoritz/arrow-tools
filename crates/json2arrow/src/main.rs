@@ -1,6 +1,6 @@
 use arrow::{error::ArrowError, ipc::writer::FileWriter, json::ReaderBuilder};
 use clap::{Parser, ValueHint};
-use std::io::{stdout, BufReader, Seek, SeekFrom};
+use std::io::{stdout, BufReader, Seek};
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::{fs::File, io::Write};
@@ -43,8 +43,7 @@ fn main() -> Result<(), ArrowError> {
             let schema_file = match File::open(&schema_def_file_path) {
                 Ok(file) => Ok(file),
                 Err(error) => Err(ArrowError::IoError(format!(
-                    "Error opening schema file: {:?}, message: {}",
-                    schema_def_file_path, error
+                    "Error opening schema file: {schema_def_file_path:?}, message: {error}"
                 ))),
             }?;
             let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
@@ -52,8 +51,7 @@ fn main() -> Result<(), ArrowError> {
             match schema {
                 Ok(schema) => Ok(schema),
                 Err(err) => Err(ArrowError::SchemaError(format!(
-                    "Error reading schema json: {}",
-                    err
+                    "Error reading schema json: {err}"
                 ))),
             }
         }
@@ -62,12 +60,11 @@ fn main() -> Result<(), ArrowError> {
 
             match arrow::json::reader::infer_json_schema(&mut buf_reader, opts.max_read_records) {
                 Ok(schema) => {
-                    input.seek(SeekFrom::Start(0))?;
+                    input.rewind()?;
                     Ok(schema)
                 }
                 Err(error) => Err(ArrowError::SchemaError(format!(
-                    "Error inferring schema: {}",
-                    error
+                    "Error inferring schema: {error}"
                 ))),
             }
         }
@@ -76,7 +73,7 @@ fn main() -> Result<(), ArrowError> {
     if opts.print_schema || opts.dry {
         let json = serde_json::to_string_pretty(&schema).unwrap();
         eprintln!("Schema:");
-        println!("{}", json);
+        println!("{json}");
         if opts.dry {
             return Ok(());
         }
