@@ -1,0 +1,19 @@
+name: Dependabot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: marcoroth/dependabot-bump-together-action@v0.3.1
+        with:
+          dependencies: arrow, arrow-schema, parquet
+          package_managers: cargo
+          directory: /
+          branch: main
+          username: x-access-token
+          token: ${{ secrets.GITHUB_TOKEN }}

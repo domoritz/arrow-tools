@@ -1,0 +1,16 @@
+[package]
+name = "json2arrow"
+version = "0.6.1"
+authors = ["Dominik Moritz <domoritz@cmu.edu>"]
+license = "MIT/Apache-2.0"
+edition = "2018"
+repository = "https://github.com/domoritz/arrow-tools"
+description = "Convert JSON files to Arrow"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+arrow = "32.0.0"
+arrow-schema = { version = "32.0.0", features = ["serde"] }
+serde_json = "1.0.91"
+clap = { version = "4.1.4", features = ["derive"] }
