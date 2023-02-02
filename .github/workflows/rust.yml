@@ -22,6 +22,8 @@ jobs:
         with:
           toolchain: beta
           components: clippy, rust-src, rustfmt
+      - name: Build
+        run: cargo build --verbose
       - name: Check
         run: cargo check
       - name: Clippy
