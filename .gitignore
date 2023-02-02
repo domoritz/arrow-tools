@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-/target/
 **/*.rs.bk
-*.csv
-*.arrow
-.idea/
 .DS_Store
-=======
 /target
 *.csv
 *.arrow
@@ -13,6 +7,4 @@
 *.py
 *.txt
 *.tsv
-
 .idea/
->>>>>>> csv2parquet/main
