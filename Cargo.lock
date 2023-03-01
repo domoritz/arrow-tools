@@ -460,7 +460,7 @@ dependencies = [
 
 [[package]]
 name = "csv2arrow"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -470,7 +470,7 @@ dependencies = [
 
 [[package]]
 name = "csv2parquet"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -697,7 +697,7 @@ dependencies = [
 
 [[package]]
 name = "json2arrow"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -707,7 +707,7 @@ dependencies = [
 
 [[package]]
 name = "json2parquet"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
