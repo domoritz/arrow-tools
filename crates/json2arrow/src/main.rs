@@ -1,4 +1,5 @@
-use arrow::{error::ArrowError, ipc::writer::FileWriter, json::ReaderBuilder};
+use arrow::record_batch::RecordBatchReader;
+use arrow::{error::ArrowError, ipc::writer::FileWriter, json::RawReaderBuilder};
 use clap::{Parser, ValueHint};
 use std::io::{stdout, BufReader, Seek};
 use std::path::PathBuf;
@@ -79,9 +80,11 @@ fn main() -> Result<(), ArrowError> {
         }
     }
 
+    let buf_reader = BufReader::new(&input);
+
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new().with_schema(schema_ref);
-    let reader = builder.build(input)?;
+    let builder = RawReaderBuilder::new(schema_ref);
+    let reader = builder.build(buf_reader)?;
 
     let output = match opts.output {
         Some(ref path) => File::create(path).map(|f| Box::new(f) as Box<dyn Write>)?,

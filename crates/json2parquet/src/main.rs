@@ -1,4 +1,5 @@
-use arrow::json::ReaderBuilder;
+use arrow::json::RawReaderBuilder;
+use arrow::record_batch::RecordBatchReader;
 use clap::{Parser, ValueHint};
 use parquet::{
     arrow::ArrowWriter,
@@ -158,11 +159,13 @@ fn main() -> Result<(), ParquetError> {
         }
     }
 
+    let buf_reader = BufReader::new(&input);
+
     let output = File::create(opts.output)?;
 
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new().with_schema(schema_ref);
-    let reader = builder.build(input)?;
+    let builder = RawReaderBuilder::new(schema_ref);
+    let reader = builder.build(buf_reader)?;
 
     let mut props = WriterProperties::builder().set_dictionary_enabled(opts.dictionary);
 
