@@ -1,5 +1,6 @@
 use arrow::json::RawReaderBuilder;
 use arrow::record_batch::RecordBatchReader;
+use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
 use parquet::{
     arrow::ArrowWriter,
@@ -116,38 +117,31 @@ struct Opts {
 fn main() -> Result<(), ParquetError> {
     let opts: Opts = Opts::parse();
 
-    let mut input = File::open(opts.input)?;
+    let mut file = File::open(&opts.input)?;
 
-    let schema = match opts.schema_file {
-        Some(schema_def_file_path) => {
-            let schema_file = match File::open(&schema_def_file_path) {
-                Ok(file) => Ok(file),
-                Err(error) => Err(ParquetError::General(format!(
-                    "Error opening schema file: {schema_def_file_path:?}, message: {error}"
-                ))),
-            }?;
-            let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
-                serde_json::from_reader(schema_file);
-            match schema {
-                Ok(schema) => Ok(schema),
-                Err(err) => Err(ParquetError::General(format!(
-                    "Error reading schema json: {err}"
-                ))),
-            }
-        }
-        _ => {
-            let mut buf_reader = BufReader::new(&input);
+    let input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+        Box::new(file)
+    } else {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            file,
+            opts.max_read_records,
+        ))
+    };
 
-            match arrow::json::reader::infer_json_schema(&mut buf_reader, opts.max_read_records) {
-                Ok(schema) => {
-                    input.rewind()?;
-                    Ok(schema)
-                }
-                Err(error) => Err(ParquetError::General(format!(
-                    "Error inferring schema: {error}"
-                ))),
-            }
-        }
+    let mut buf_reader = BufReader::new(input);
+
+    let schema = if let Some(schema_def_file_path) = opts.schema_file {
+        let schema_file = File::open(&schema_def_file_path).map_err(|error| {
+            ParquetError::General(format!(
+                "Error opening schema file: {schema_def_file_path:?}, message: {error}"
+            ))
+        })?;
+        let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
+            serde_json::from_reader(schema_file);
+        schema.map_err(|error| ParquetError::General(format!("Error reading schema json: {error}")))
+    } else {
+        arrow::json::reader::infer_json_schema_from_seekable(&mut buf_reader, opts.max_read_records)
+            .map_err(|err| ParquetError::General(format!("Error inferring schema: {err}")))
     }?;
 
     if opts.print_schema || opts.dry {
@@ -158,8 +152,6 @@ fn main() -> Result<(), ParquetError> {
             return Ok(());
         }
     }
-
-    let buf_reader = BufReader::new(&input);
 
     let output = File::create(opts.output)?;
 
@@ -239,14 +231,8 @@ fn main() -> Result<(), ParquetError> {
     let mut writer = ArrowWriter::try_new(output, reader.schema(), Some(props.build()))?;
 
     for batch in reader {
-        match batch {
-            Ok(batch) => writer.write(&batch)?,
-            Err(error) => return Err(error.into()),
-        }
+        writer.write(&batch?)?;
     }
 
-    match writer.close() {
-        Ok(_) => Ok(()),
-        Err(error) => Err(error),
-    }
+    writer.close().map(|_| ())
 }
