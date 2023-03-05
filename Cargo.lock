@@ -264,6 +264,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "arrow-tools"
+version = "0.0.1"
+
+[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -464,6 +468,7 @@ version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
+ "arrow-tools",
  "clap",
  "serde_json",
 ]
@@ -474,6 +479,7 @@ version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
+ "arrow-tools",
  "clap",
  "parquet",
  "serde_json",
@@ -701,6 +707,7 @@ version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
+ "arrow-tools",
  "clap",
  "serde_json",
 ]
@@ -711,6 +718,7 @@ version = "0.8.1"
 dependencies = [
  "arrow",
  "arrow-schema",
+ "arrow-tools",
  "clap",
  "parquet",
  "serde_json",
