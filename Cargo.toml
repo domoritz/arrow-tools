@@ -5,6 +5,7 @@ members = [
   "crates/csv2parquet",
   "crates/json2arrow",
   "crates/json2parquet",
+  "crates/arrow-tools"
 ]
 
 [workspace.metadata.release]
