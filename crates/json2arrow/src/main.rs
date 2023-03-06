@@ -1,10 +1,11 @@
 use arrow::record_batch::RecordBatchReader;
 use arrow::{error::ArrowError, ipc::writer::FileWriter, json::RawReaderBuilder};
+use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
-use std::io::{stdout, BufReader, Seek};
+use std::fs::File;
+use std::io::{stdout, BufReader, Seek, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
-use std::{fs::File, io::Write};
 
 #[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
@@ -37,7 +38,18 @@ struct Opts {
 fn main() -> Result<(), ArrowError> {
     let opts: Opts = Opts::parse();
 
-    let mut input = File::open(opts.input)?;
+    let mut file = File::open(&opts.input)?;
+
+    let input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+        Box::new(file)
+    } else {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            file,
+            opts.max_read_records,
+        ))
+    };
+
+    let mut buf_reader = BufReader::new(input);
 
     let schema = match opts.schema_file {
         Some(schema_def_file_path) => {
@@ -56,19 +68,15 @@ fn main() -> Result<(), ArrowError> {
                 ))),
             }
         }
-        _ => {
-            let mut buf_reader = BufReader::new(&input);
-
-            match arrow::json::reader::infer_json_schema(&mut buf_reader, opts.max_read_records) {
-                Ok(schema) => {
-                    input.rewind()?;
-                    Ok(schema)
-                }
-                Err(error) => Err(ArrowError::SchemaError(format!(
-                    "Error inferring schema: {error}"
-                ))),
-            }
-        }
+        _ => match arrow::json::reader::infer_json_schema_from_seekable(
+            &mut buf_reader,
+            opts.max_read_records,
+        ) {
+            Ok(schema) => Ok(schema),
+            Err(error) => Err(ArrowError::SchemaError(format!(
+                "Error inferring schema: {error}"
+            ))),
+        },
     }?;
 
     if opts.print_schema || opts.dry {
@@ -79,8 +87,6 @@ fn main() -> Result<(), ArrowError> {
             return Ok(());
         }
     }
-
-    let buf_reader = BufReader::new(&input);
 
     let schema_ref = Arc::new(schema);
     let builder = RawReaderBuilder::new(schema_ref);

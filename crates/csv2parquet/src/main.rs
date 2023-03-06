@@ -1,4 +1,5 @@
 use arrow::csv::ReaderBuilder;
+use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
 use parquet::{
     arrow::ArrowWriter,
@@ -6,9 +7,9 @@ use parquet::{
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
-use std::fs::File;
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::{fs::File, io::Seek};
 
 #[derive(clap::ValueEnum, Clone)]
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
@@ -121,7 +122,16 @@ struct Opts {
 fn main() -> Result<(), ParquetError> {
     let opts: Opts = Opts::parse();
 
-    let mut input = File::open(opts.input)?;
+    let mut file = File::open(&opts.input)?;
+
+    let mut input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+        Box::new(file)
+    } else {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            file,
+            opts.max_read_records,
+        ))
+    };
 
     let schema = match opts.schema_file {
         Some(schema_def_file_path) => {

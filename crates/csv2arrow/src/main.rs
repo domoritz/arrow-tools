@@ -1,9 +1,10 @@
 use arrow::{csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
+use arrow_tools::seekable_reader::{SeekRead, SeekableReader};
 use clap::{Parser, ValueHint};
 use std::io::stdout;
 use std::path::PathBuf;
 use std::sync::Arc;
-use std::{fs::File, io::Write};
+use std::{fs::File, io::Seek, io::Write};
 
 #[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
@@ -44,7 +45,16 @@ struct Opts {
 fn main() -> Result<(), ArrowError> {
     let opts: Opts = Opts::parse();
 
-    let mut input = File::open(opts.input)?;
+    let mut file = File::open(&opts.input)?;
+
+    let mut input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+        Box::new(file)
+    } else {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            file,
+            opts.max_read_records,
+        ))
+    };
 
     let schema = match opts.schema_file {
         Some(schema_def_file_path) => {
