@@ -75,16 +75,19 @@ The --schema-file option uses the same file format as --dry and --print-schema.
 ## Examples
 
 ### Convert a CSV to Parquet
+
 ```bash
 csv2parquet data.csv data.parquet
 ```
 
 ### Convert a CSV with no `header` to Parquet
+
 ```bash
 csv2parquet --header false <CSV> <PARQUET>
 ```
 
 ### Get the `schema` from a CSV with header
+
 ```bash
 csv2parquet --header true --dry <CSV> <PARQUET>
 ```
@@ -118,6 +121,7 @@ Below is an example of the `schema-file` content:
 ```
 
 Then add the schema-file `schema.json` in the command:
+
 ```
 csv2parquet --header false --schema-file schema.json <CSV> <PARQUET>
 ```
