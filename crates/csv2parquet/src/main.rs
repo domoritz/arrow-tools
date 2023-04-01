@@ -2,7 +2,7 @@ use arrow::csv::ReaderBuilder;
 use clap::{Parser, ValueHint};
 use parquet::{
     arrow::ArrowWriter,
-    basic::{Compression, Encoding},
+    basic::{BrotliLevel, Compression, Encoding, GzipLevel, ZstdLevel},
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
@@ -20,6 +20,7 @@ enum ParquetCompression {
     BROTLI,
     LZ4,
     ZSTD,
+    LZ4_RAW,
 }
 
 #[derive(clap::ValueEnum, Clone)]
@@ -190,11 +191,12 @@ fn main() -> Result<(), ParquetError> {
         let compression = match compression {
             ParquetCompression::UNCOMPRESSED => Compression::UNCOMPRESSED,
             ParquetCompression::SNAPPY => Compression::SNAPPY,
-            ParquetCompression::GZIP => Compression::GZIP,
+            ParquetCompression::GZIP => Compression::GZIP(GzipLevel::default()),
             ParquetCompression::LZO => Compression::LZO,
-            ParquetCompression::BROTLI => Compression::BROTLI,
+            ParquetCompression::BROTLI => Compression::BROTLI(BrotliLevel::default()),
             ParquetCompression::LZ4 => Compression::LZ4,
-            ParquetCompression::ZSTD => Compression::ZSTD,
+            ParquetCompression::ZSTD => Compression::ZSTD(ZstdLevel::default()),
+            ParquetCompression::LZ4_RAW => Compression::LZ4_RAW,
         };
 
         props = props.set_compression(compression);
