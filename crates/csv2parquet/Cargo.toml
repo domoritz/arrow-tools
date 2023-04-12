@@ -3,7 +3,7 @@ name = "csv2parquet"
 version = "0.8.1"
 authors = ["Dominik Moritz <domoritz@cmu.edu>"]
 license = "MIT/Apache-2.0"
-edition = "2018"
+edition = "2021"
 repository = "https://github.com/domoritz/arrow-tools"
 description = "Convert CSV files to Parquet"
 
