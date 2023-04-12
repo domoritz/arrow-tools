@@ -9,7 +9,7 @@ use std::{fs::File, io::Seek, io::Write};
 #[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
-    /// Input CSV file.
+    /// Input CSV file, stdin if not present.
     #[clap(name = "CSV", value_parser, value_hint = ValueHint::AnyPath)]
     input: PathBuf,
 

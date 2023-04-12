@@ -28,9 +28,11 @@ cargo binstall csv2parquet
 
 ```
 Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>
+
 Arguments:
-  <CSV>      Input CSV file
+  <CSV>      Input CSV file, stdin if not present
   <PARQUET>  Output file
+
 Options:
   -s, --schema-file <SCHEMA_FILE>
           File with Arrow schema in JSON format
@@ -41,7 +43,7 @@ Options:
   -d, --delimiter <DELIMITER>
           Set the CSV file's column delimiter as a byte character [default: ,]
   -c, --compression <COMPRESSION>
-          Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd]
+          Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
   -e, --encoding <ENCODING>
           Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
       --data-pagesize-limit <DATA_PAGESIZE_LIMIT>
@@ -65,9 +67,9 @@ Options:
   -n, --dry
           Only print the schema
   -h, --help
-          Print help information
+          Print help
   -V, --version
-          Print version information
+          Print version
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.

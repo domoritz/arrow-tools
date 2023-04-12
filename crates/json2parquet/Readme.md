@@ -30,7 +30,7 @@ cargo binstall json2parquet
 Usage: json2parquet [OPTIONS] <JSON> <PARQUET>
 
 Arguments:
-  <JSON>     Input JSON file
+  <JSON>     Input JSON file, stdin if not present
   <PARQUET>  Output file
 
 Options:
@@ -39,7 +39,7 @@ Options:
       --max-read-records <MAX_READ_RECORDS>
           The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed
   -c, --compression <COMPRESSION>
-          Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd]
+          Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
   -e, --encoding <ENCODING>
           Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
       --data-pagesize-limit <DATA_PAGESIZE_LIMIT>
@@ -63,9 +63,9 @@ Options:
   -n, --dry
           Only print the schema
   -h, --help
-          Print help information
+          Print help
   -V, --version
-          Print version information
+          Print version
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.

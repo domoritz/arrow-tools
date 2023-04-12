@@ -30,7 +30,7 @@ cargo binstall json2arrow
 Usage: json2arrow [OPTIONS] <JSON> [ARROW]
 
 Arguments:
-  <JSON>   Input JSON file
+  <JSON>   Input JSON file, stdin if not present
   [ARROW]  Output file, stdout if not present
 
 Options:
@@ -43,9 +43,9 @@ Options:
   -n, --dry
           Only print the schema
   -h, --help
-          Print help information
+          Print help
   -V, --version
-          Print version information
+          Print version
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.

@@ -30,7 +30,7 @@ cargo binstall csv2arrow
 Usage: csv2arrow [OPTIONS] <CSV> [ARROW]
 
 Arguments:
-  <CSV>    Input CSV file
+  <CSV>    Input CSV file, stdin if not present
   [ARROW]  Output file, stdout if not present
 
 Options:
@@ -47,9 +47,9 @@ Options:
   -n, --dry
           Only print the schema
   -h, --help
-          Print help information
+          Print help
   -V, --version
-          Print version information
+          Print version
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.
