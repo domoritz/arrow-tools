@@ -1,5 +1,5 @@
 use arrow::record_batch::RecordBatchReader;
-use arrow::{error::ArrowError, ipc::writer::FileWriter, json::RawReaderBuilder};
+use arrow::{error::ArrowError, ipc::writer::FileWriter, json::ReaderBuilder};
 use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
 use std::fs::File;
@@ -89,7 +89,7 @@ fn main() -> Result<(), ArrowError> {
     }
 
     let schema_ref = Arc::new(schema);
-    let builder = RawReaderBuilder::new(schema_ref);
+    let builder = ReaderBuilder::new(schema_ref);
     let reader = builder.build(buf_reader)?;
 
     let output = match opts.output {
