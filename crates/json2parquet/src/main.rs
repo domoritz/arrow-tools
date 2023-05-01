@@ -1,4 +1,4 @@
-use arrow::json::RawReaderBuilder;
+use arrow::json::ReaderBuilder;
 use arrow::record_batch::RecordBatchReader;
 use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
@@ -156,7 +156,7 @@ fn main() -> Result<(), ParquetError> {
     let output = File::create(opts.output)?;
 
     let schema_ref = Arc::new(schema);
-    let builder = RawReaderBuilder::new(schema_ref);
+    let builder = ReaderBuilder::new(schema_ref);
     let reader = builder.build(buf_reader)?;
 
     let mut props = WriterProperties::builder().set_dictionary_enabled(opts.dictionary);
