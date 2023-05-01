@@ -11,7 +11,7 @@ description = "Convert JSON files to Parquet"
 
 [dependencies]
 parquet = "36.0.0"
-arrow = "36.0.0"
+arrow = "38.0.0"
 arrow-schema = { version = "36.0.0", features = ["serde"] }
 serde_json = "1.0.96"
 clap = { version = "4.2.5", features = ["derive"] }
