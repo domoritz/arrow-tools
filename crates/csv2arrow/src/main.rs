@@ -1,4 +1,4 @@
-use arrow::{csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
+use arrow::{csv::reader::Format, csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
 use arrow_tools::seekable_reader::{SeekRead, SeekableReader};
 use clap::{Parser, ValueHint};
 use std::io::stdout;
@@ -74,12 +74,11 @@ fn main() -> Result<(), ArrowError> {
             }
         }
         _ => {
-            match arrow::csv::reader::infer_file_schema(
-                &mut input,
-                opts.delimiter as u8,
-                opts.max_read_records,
-                opts.header.unwrap_or(true),
-            ) {
+            let format = Format::default()
+                .with_delimiter(opts.delimiter as u8)
+                .with_header(opts.header.unwrap_or(true));
+
+            match format.infer_schema(&mut input, opts.max_read_records) {
                 Ok((schema, _inferred_has_header)) => Ok(schema),
                 Err(error) => Err(ArrowError::SchemaError(format!(
                     "Error inferring schema: {error}"
@@ -98,10 +97,9 @@ fn main() -> Result<(), ArrowError> {
     }
 
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new()
+    let builder = ReaderBuilder::new(schema_ref)
         .has_header(opts.header.unwrap_or(true))
-        .with_delimiter(opts.delimiter as u8)
-        .with_schema(schema_ref);
+        .with_delimiter(opts.delimiter as u8);
 
     let reader = builder.build(input)?;
 
