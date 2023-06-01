@@ -350,15 +350,15 @@ name = "arrow-schema"
 version = "38.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc85923d8d6662cc66ac6602c7d1876872e671002d60993dfdf492a6badeae92"
-dependencies = [
- "serde",
-]
 
 [[package]]
 name = "arrow-schema"
 version = "40.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "25187bbef474151a2e4ddec67b9e34bda5cbfba292dc571392fa3a1f71ff5a82"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "arrow-select"
@@ -606,7 +606,7 @@ name = "csv2arrow"
 version = "0.10.0"
 dependencies = [
  "arrow",
- "arrow-schema 38.0.0",
+ "arrow-schema 40.0.0",
  "arrow-tools",
  "clap",
  "serde_json",
@@ -617,7 +617,7 @@ name = "csv2parquet"
 version = "0.10.0"
 dependencies = [
  "arrow",
- "arrow-schema 38.0.0",
+ "arrow-schema 40.0.0",
  "arrow-tools",
  "clap",
  "parquet",
@@ -801,7 +801,7 @@ name = "json2arrow"
 version = "0.10.0"
 dependencies = [
  "arrow",
- "arrow-schema 38.0.0",
+ "arrow-schema 40.0.0",
  "arrow-tools",
  "clap",
  "serde_json",
@@ -812,7 +812,7 @@ name = "json2parquet"
 version = "0.10.0"
 dependencies = [
  "arrow",
- "arrow-schema 38.0.0",
+ "arrow-schema 40.0.0",
  "arrow-tools",
  "clap",
  "parquet",
