@@ -12,7 +12,7 @@ description = "Convert JSON files to Parquet"
 [dependencies]
 parquet = "40.0.0"
 arrow = "40.0.0"
-arrow-schema = { version = "40.0.0", features = ["serde"] }
+arrow-schema = { version = "42.0.0", features = ["serde"] }
 serde_json = "1.0.96"
 clap = { version = "4.3.10", features = ["derive"] }
 arrow-tools = { version = "0.11.0", path = "../arrow-tools" }
