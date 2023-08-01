@@ -18,6 +18,6 @@ cargo clippy && cargo fmt
 
 ## Making a release
 
-We use [`cargo-release`](https://github.com/crate-ci/cargo-release/tree/master) to make releases, which you can install with `cargo binstall cargo-release` or `cargo install cargo-release`.
+We use [`cargo-release`](https://github.com/crate-ci/cargo-release/tree/master) to make releases, which you can install with `cargo binstall cargo-release` or `cargo install cargo-release`. To update the CI scripts, run `cargo dist generate-ci`, which uses [cargo-dist](https://github.com/axodotdev/cargo-dist).
 
 Then run `cargo release LEVEL` such as `cargo release minor` as a dry run. When everything works, add `--execute`.
