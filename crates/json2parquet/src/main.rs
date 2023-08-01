@@ -75,11 +75,11 @@ struct Opts {
 
     /// Sets data page size limit.
     #[clap(long)]
-    data_pagesize_limit: Option<usize>,
+    data_page_size_limit: Option<usize>,
 
     /// Sets dictionary page size limit.
     #[clap(long)]
-    dictionary_pagesize_limit: Option<usize>,
+    dictionary_page_size_limit: Option<usize>,
 
     /// Sets write batch size.
     #[clap(long)]
@@ -204,16 +204,16 @@ fn main() -> Result<(), ParquetError> {
         props = props.set_write_batch_size(size);
     }
 
-    if let Some(size) = opts.data_pagesize_limit {
-        props = props.set_data_pagesize_limit(size);
+    if let Some(size) = opts.data_page_size_limit {
+        props = props.set_data_page_size_limit(size);
     }
 
-    if let Some(size) = opts.dictionary_pagesize_limit {
-        props = props.set_dictionary_pagesize_limit(size);
+    if let Some(size) = opts.dictionary_page_size_limit {
+        props = props.set_dictionary_page_size_limit(size);
     }
 
-    if let Some(size) = opts.dictionary_pagesize_limit {
-        props = props.set_dictionary_pagesize_limit(size);
+    if let Some(size) = opts.dictionary_page_size_limit {
+        props = props.set_dictionary_page_size_limit(size);
     }
 
     if let Some(size) = opts.max_row_group_size {

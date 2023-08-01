@@ -46,9 +46,9 @@ Options:
           Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
   -e, --encoding <ENCODING>
           Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
-      --data-pagesize-limit <DATA_PAGESIZE_LIMIT>
+      --data-page-size-limit <DATA_PAGE_SIZE_LIMIT>
           Sets data page size limit
-      --dictionary-pagesize-limit <DICTIONARY_PAGESIZE_LIMIT>
+      --dictionary-page-size-limit <DICTIONARY_PAGE_SIZE_LIMIT>
           Sets dictionary page size limit
       --write-batch-size <WRITE_BATCH_SIZE>
           Sets write batch size
