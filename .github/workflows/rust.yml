@@ -21,12 +21,12 @@ jobs:
         with:
           toolchain: beta
           components: clippy, rust-src, rustfmt
-      - name: Clippy
-        run: cargo clippy --all -- -D warnings
       - name: Check formatting
         run: cargo fmt -- --check
       - name: Check
         run: cargo check
+      - name: Clippy
+        run: cargo clippy --all -- -D warnings
       - name: Build
         run: cargo build --verbose
 
