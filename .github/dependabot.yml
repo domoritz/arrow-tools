@@ -4,12 +4,12 @@ updates:
   directory: "/"
   schedule:
     interval: monthly
-    groups:
-      arrow-deps:
-        patterns:
-            - "arrow"
-            - "arrow-schema"
-            - "parquet"
+  groups:
+    arrow-deps:
+      patterns:
+          - "arrow"
+          - "arrow-schema"
+          - "parquet"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
