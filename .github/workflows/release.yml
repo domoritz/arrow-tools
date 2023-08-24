@@ -1,3 +1,6 @@
+# Copyright 2022-2023, axodotdev
+# SPDX-License-Identifier: MIT or Apache-2.0
+#
 # CI that:
 #
 # * checks for a Git Tag that looks like a release
@@ -51,10 +54,12 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Install Rust
-        run: rustup update 1.71.0 --no-self-update && rustup default 1.71.0
+        run: rustup update "1.71.0" --no-self-update && rustup default "1.71.0""#
       - name: Install cargo-dist
-        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.0.7/cargo-dist-installer.sh | sh
+        run: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.1.0/cargo-dist-installer.sh | sh"
       - id: create-release
         run: |
           cargo dist plan --tag=${{ github.ref_name }} --output-format=json > dist-manifest.json
@@ -82,26 +87,32 @@ jobs:
     needs: create-release
     if: ${{ needs.create-release.outputs.has-releases == 'true' }}
     strategy:
+      fail-fast: false
       matrix:
         # For these target platforms
         include:
-        - os: macos-11
-          dist-args: --artifacts=local --target=aarch64-apple-darwin --target=x86_64-apple-darwin
-          install-dist: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.0.7/cargo-dist-installer.sh | sh
-        - os: ubuntu-20.04
-          dist-args: --artifacts=local --target=x86_64-unknown-linux-gnu
-          install-dist: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.0.7/cargo-dist-installer.sh | sh
-        - os: windows-2019
-          dist-args: --artifacts=local --target=x86_64-pc-windows-msvc
-          install-dist: irm  https://github.com/axodotdev/cargo-dist/releases/download/v0.0.7/cargo-dist-installer.ps1 | iex
+        - os: "macos-11"
+          dist-args: "--artifacts=local --target=aarch64-apple-darwin"
+          install-dist: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.1.0/cargo-dist-installer.sh | sh"
+        - os: "macos-11"
+          dist-args: "--artifacts=local --target=x86_64-apple-darwin"
+          install-dist: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.1.0/cargo-dist-installer.sh | sh"
+        - os: "windows-2019"
+          dist-args: "--artifacts=local --target=x86_64-pc-windows-msvc"
+          install-dist: "irm  https://github.com/axodotdev/cargo-dist/releases/download/v0.1.0/cargo-dist-installer.ps1 | iex"
+        - os: "ubuntu-20.04"
+          dist-args: "--artifacts=local --target=x86_64-unknown-linux-gnu"
+          install-dist: "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.1.0/cargo-dist-installer.sh | sh"
 
     runs-on: ${{ matrix.os }}
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Install Rust
-        run: rustup update 1.71.0 --no-self-update && rustup default 1.71.0
+        run: rustup update "1.71.0" --no-self-update && rustup default "1.71.0""#
       - name: Install cargo-dist
         run: ${{ matrix.install-dist }}
       - name: Run cargo-dist
@@ -132,6 +143,8 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: mark release as non-draft
         run: |
           gh release edit ${{ github.ref_name }} --draft=false
