@@ -8,6 +8,8 @@ members = [
   "crates/arrow-tools"
 ]
 
+resolver = "2"
+
 [workspace.metadata.release]
 shared-version = true
 tag-name = "v{{version}}"

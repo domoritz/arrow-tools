@@ -57,7 +57,7 @@ fn main() -> Result<(), ArrowError> {
                 Ok(file) => Ok(file),
                 Err(error) => Err(ArrowError::IoError(format!(
                     "Error opening schema file: {schema_def_file_path:?}, message: {error}"
-                ))),
+                ), error)),
             }?;
             let schema: Result<arrow::datatypes::Schema, serde_json::Error> =
                 serde_json::from_reader(schema_file);
