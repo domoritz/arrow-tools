@@ -50,6 +50,8 @@ Options:
 
 The --schema-file option uses the same file format as --dry and --print-schema.
 
+For examples of usage see [csv2parquet examples](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet#examples) as both programs share a similar interface.
+
 ## Limitations
 
 Since we use the Arrow JSON loader, we are limited to what it supports. Right now, it supports JSON line-delimited files.

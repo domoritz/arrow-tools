@@ -53,3 +53,5 @@ Options:
 ```
 
 The --schema-file option uses the same file format as --dry and --print-schema.
+
+For examples of usage see [csv2parquet examples](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet#examples) as both programs share a similar interface.
