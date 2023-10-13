@@ -10,3 +10,5 @@ This repository contains five projects:
 * [`json2arrow`](https://github.com/domoritz/arrow-tools/tree/main/crates/json2arrow) to convert JSON files to Apache Arrow.
 * [`json2parquet`](https://github.com/domoritz/arrow-tools/tree/main/crates/json2parquet) to convert JSON files to Parquet.
 * [`arrow-tools`](https://github.com/domoritz/arrow-tools/tree/main/crates/arrow-tools) shared utilities used by the other four packages.
+
+For usage examples, see the [`csv2parquet` examples](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet#examples).

@@ -127,3 +127,11 @@ Then add the schema-file `schema.json` in the command:
 ```
 csv2parquet --header false --schema-file schema.json <CSV> <PARQUET>
 ```
+
+### Convert streams piping from standard input to standard output
+
+This technique can prevent you from writing large files to disk. For example, here we stream a CSV file from a URL to S3.
+
+```bash
+curl <FILE_URL> | csv2parquet /dev/stdin /dev/stdout | aws s3 cp - <S3_DESTINATION>
+```
