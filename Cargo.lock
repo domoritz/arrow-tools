@@ -326,7 +326,7 @@ dependencies = [
 
 [[package]]
 name = "arrow-tools"
-version = "0.14.1"
+version = "0.15.0"
 
 [[package]]
 name = "autocfg"
@@ -523,7 +523,7 @@ dependencies = [
 
 [[package]]
 name = "csv2arrow"
-version = "0.14.1"
+version = "0.15.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -534,7 +534,7 @@ dependencies = [
 
 [[package]]
 name = "csv2parquet"
-version = "0.14.1"
+version = "0.15.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -669,7 +669,7 @@ dependencies = [
 
 [[package]]
 name = "json2arrow"
-version = "0.14.1"
+version = "0.15.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -680,7 +680,7 @@ dependencies = [
 
 [[package]]
 name = "json2parquet"
-version = "0.14.1"
+version = "0.15.0"
 dependencies = [
  "arrow",
  "arrow-schema",
