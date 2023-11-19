@@ -75,7 +75,7 @@ fn main() -> Result<(), ArrowError> {
             &mut buf_reader,
             opts.max_read_records,
         ) {
-            Ok(schema) => Ok(schema),
+            Ok((schema, _size)) => Ok(schema),
             Err(error) => Err(ArrowError::SchemaError(format!(
                 "Error inferring schema: {error}"
             ))),
