@@ -157,7 +157,7 @@ fn main() -> Result<(), ParquetError> {
                 .with_header(opts.header.unwrap_or(true));
 
             match format.infer_schema(&mut input, opts.max_read_records) {
-                Ok((schema, _inferred_has_header)) => Ok(schema),
+                Ok((schema, _size)) => Ok(schema),
                 Err(error) => Err(ParquetError::General(format!(
                     "Error inferring schema: {error}"
                 ))),
@@ -176,7 +176,7 @@ fn main() -> Result<(), ParquetError> {
 
     let schema_ref = Arc::new(schema);
     let builder = ReaderBuilder::new(schema_ref)
-        .has_header(opts.header.unwrap_or(true))
+        .with_header(opts.header.unwrap_or(true))
         .with_delimiter(opts.delimiter as u8);
 
     let reader = builder.build(input)?;

@@ -142,6 +142,7 @@ fn main() -> Result<(), ParquetError> {
     } else {
         arrow::json::reader::infer_json_schema_from_seekable(&mut buf_reader, opts.max_read_records)
             .map_err(|err| ParquetError::General(format!("Error inferring schema: {err}")))
+            .map(|result| result.0)
     }?;
 
     if opts.print_schema || opts.dry {
