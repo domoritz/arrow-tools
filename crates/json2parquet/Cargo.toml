@@ -14,5 +14,5 @@ parquet = "49.0.0"
 arrow = "49.0.0"
 arrow-schema = { version = "49.0.0", features = ["serde"] }
 serde_json = "1.0.108"
-clap = { version = "4.4.7", features = ["derive"] }
+clap = { version = "4.4.10", features = ["derive"] }
 arrow-tools = { version = "0.17.3", path = "../arrow-tools" }
