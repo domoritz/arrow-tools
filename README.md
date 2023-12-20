@@ -12,3 +12,5 @@ This repository contains five projects:
 * [`arrow-tools`](https://github.com/domoritz/arrow-tools/tree/main/crates/arrow-tools) shared utilities used by the other four packages.
 
 For usage examples, see the [`csv2parquet` examples](https://github.com/domoritz/arrow-tools/tree/main/crates/csv2parquet#examples).
+
+[Homebrew](https://brew.sh) formulas are pushed to [domoritz/homebrew-tap](https://github.com/domoritz/homebrew-tap) for every release.
