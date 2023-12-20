@@ -10,6 +10,12 @@ Convert JSON files to Apache Arrow. This package is part of [Arrow CLI tools](ht
 
 You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
+### With Homebrew
+
+```
+brew install domoritz/homebrew-tap/json2arrow
+```
+
 ### With Cargo
 
 ```

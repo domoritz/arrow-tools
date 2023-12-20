@@ -10,6 +10,12 @@ Convert CSV files to [Apache Parquet](https://parquet.apache.org/). This package
 
 You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
+### With Homebrew
+
+```
+brew install domoritz/homebrew-tap/csv2parquet
+```
+
 ### With Cargo
 
 ```

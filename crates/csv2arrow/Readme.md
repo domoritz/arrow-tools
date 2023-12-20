@@ -10,6 +10,12 @@ Convert CSV files to Apache Arrow. This package is part of [Arrow CLI tools](htt
 
 You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
+### With Homebrew
+
+```
+brew install domoritz/homebrew-tap/csv2arrow
+```
+
 ### With Cargo
 
 ```

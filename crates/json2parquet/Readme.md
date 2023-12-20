@@ -10,6 +10,12 @@ Convert JSON files to [Apache Parquet](https://parquet.apache.org/). This packag
 
 You can get the latest releases from https://github.com/domoritz/arrow-tools/releases.
 
+### With Homebrew
+
+```
+brew install domoritz/homebrew-tap/json2parquet
+```
+
 ### With Cargo
 
 ```
