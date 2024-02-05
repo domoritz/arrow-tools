@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/json2parquet.svg)](https://crates.io/crates/json2parquet)
 
-Convert JSON files to [Apache Parquet](https://parquet.apache.org/). This package is part of [Arrow CLI tools](https://github.com/domoritz/arrow-tools).
+Convert JSON/JSONL files to [Apache Parquet](https://parquet.apache.org/). This package is part of [Arrow CLI tools](https://github.com/domoritz/arrow-tools).
 
 ## Installation
 
