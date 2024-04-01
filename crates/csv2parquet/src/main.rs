@@ -28,12 +28,13 @@ enum ParquetCompression {
 #[allow(non_camel_case_types, clippy::upper_case_acronyms)]
 enum ParquetEncoding {
     PLAIN,
+    PLAIN_DICTIONARY,
     RLE,
-    BIT_PACKED,
+    RLE_DICTIONARY,
     DELTA_BINARY_PACKED,
     DELTA_LENGTH_BYTE_ARRAY,
     DELTA_BYTE_ARRAY,
-    RLE_DICTIONARY,
+    BYTE_STREAM_SPLIT,
 }
 
 #[derive(clap::ValueEnum, Clone)]
@@ -213,12 +214,13 @@ fn main() -> Result<(), ParquetError> {
     if let Some(encoding) = opts.encoding {
         let encoding = match encoding {
             ParquetEncoding::PLAIN => Encoding::PLAIN,
+            ParquetEncoding::PLAIN_DICTIONARY => Encoding::PLAIN_DICTIONARY,
             ParquetEncoding::RLE => Encoding::RLE,
-            ParquetEncoding::BIT_PACKED => Encoding::BIT_PACKED,
+            ParquetEncoding::RLE_DICTIONARY => Encoding::RLE_DICTIONARY,
             ParquetEncoding::DELTA_BINARY_PACKED => Encoding::DELTA_BINARY_PACKED,
             ParquetEncoding::DELTA_LENGTH_BYTE_ARRAY => Encoding::DELTA_LENGTH_BYTE_ARRAY,
             ParquetEncoding::DELTA_BYTE_ARRAY => Encoding::DELTA_BYTE_ARRAY,
-            ParquetEncoding::RLE_DICTIONARY => Encoding::RLE_DICTIONARY,
+            ParquetEncoding::BYTE_STREAM_SPLIT => Encoding::BYTE_STREAM_SPLIT,
         };
 
         props = props.set_encoding(encoding);
