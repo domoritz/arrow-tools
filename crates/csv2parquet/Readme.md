@@ -36,7 +36,7 @@ cargo binstall csv2parquet
 Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>
 
 Arguments:
-  <CSV>      Input CSV file, stdin if not present
+  <CSV>      Input CSV fil, stdin if not present
   <PARQUET>  Output file
 
 Options:
@@ -51,7 +51,7 @@ Options:
   -c, --compression <COMPRESSION>
           Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
   -e, --encoding <ENCODING>
-          Sets encoding for any column [possible values: plain, rle, bit-packed, delta-binary-packed, delta-length-byte-array, delta-byte-array, rle-dictionary]
+          Sets encoding for any column [possible values: plain, plain-dictionary, rle, rle-dictionary, delta-binary-packed, delta-length-byte-array, delta-byte-array, byte-stream-split]
       --data-page-size-limit <DATA_PAGE_SIZE_LIMIT>
           Sets data page size limit
       --dictionary-page-size-limit <DICTIONARY_PAGE_SIZE_LIMIT>
