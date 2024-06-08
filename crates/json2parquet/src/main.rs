@@ -159,6 +159,9 @@ fn main() -> Result<(), ParquetError> {
 
     let schema_ref = Arc::new(schema);
     let builder = ReaderBuilder::new(schema_ref);
+
+    buf_reader.rewind()?;
+
     let reader = builder.build(buf_reader)?;
 
     let mut props = WriterProperties::builder().set_dictionary_enabled(opts.dictionary);

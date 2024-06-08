@@ -93,6 +93,9 @@ fn main() -> Result<(), ArrowError> {
 
     let schema_ref = Arc::new(schema);
     let builder = ReaderBuilder::new(schema_ref);
+
+    buf_reader.rewind()?;
+
     let reader = builder.build(buf_reader)?;
 
     let output = match opts.output {

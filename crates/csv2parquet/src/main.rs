@@ -180,6 +180,8 @@ fn main() -> Result<(), ParquetError> {
         .with_header(opts.header.unwrap_or(true))
         .with_delimiter(opts.delimiter as u8);
 
+    input.rewind()?;
+
     let reader = builder.build(input)?;
 
     let output = File::create(opts.output)?;
