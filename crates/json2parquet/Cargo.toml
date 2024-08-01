@@ -13,6 +13,6 @@ description = "Convert JSON files to Parquet"
 parquet = "52.0.0"
 arrow = "52.0.0"
 arrow-schema = { version = "52.0.0", features = ["serde"] }
-serde_json = "1.0.119"
+serde_json = "1.0.121"
 clap = { version = "4.5.8", features = ["derive"] }
 arrow-tools = { version = "0.18.1", path = "../arrow-tools" }
