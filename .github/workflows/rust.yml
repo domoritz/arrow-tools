@@ -17,9 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
+        uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: beta
           components: clippy, rust-src, rustfmt
       - name: Check formatting
         run: cargo fmt -- --check
