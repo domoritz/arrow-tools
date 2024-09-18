@@ -114,3 +114,6 @@ fn main() -> Result<(), ArrowError> {
 
     writer.finish()
 }
+
+#[cfg(test)]
+mod test;

@@ -270,3 +270,6 @@ fn main() -> Result<(), ParquetError> {
         Err(error) => Err(error),
     }
 }
+
+#[cfg(test)]
+mod test;
