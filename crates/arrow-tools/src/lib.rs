@@ -60,7 +60,7 @@ pub mod seekable_reader {
     impl<R: std::io::Read> std::io::Read for SeekableReader<R> {
         fn read(&mut self, buf: &mut [u8]) -> Result<usize, std::io::Error> {
             let buf_len = buf.len();
-            if self.pos < self.buffered_bytes {
+            if self.pos <= self.buffered_bytes {
                 if self.buffered_bytes - self.pos < buf_len {
                     buf[..self.buffered_bytes - self.pos]
                         .copy_from_slice(&self.buffer[self.pos..self.buffered_bytes]);
@@ -110,5 +110,32 @@ pub mod seekable_reader {
                 error
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::seekable_reader::*;
+    use std::fs::File;
+    use std::io::{Read, Seek};
+
+    #[test]
+    fn test_seekable_reader() {
+        let mut seekable_reader = SeekableReader::from_unbuffered_reader(
+            File::open("../../data/simple.csv").unwrap(),
+            None,
+        );
+        let mut reader = File::open("../../data/simple.csv").unwrap();
+
+        let mut buf1 = vec![0; 20];
+        let mut buf2 = vec![0; 20];
+        seekable_reader.read_exact(&mut buf1).unwrap();
+        reader.read_exact(&mut buf2).unwrap();
+        assert_eq!(buf1, buf2);
+
+        seekable_reader.rewind().unwrap();
+        let mut buf3 = vec![0; 20];
+        seekable_reader.read_exact(&mut buf3).unwrap();
+        assert_eq!(buf3, buf2);
     }
 }
