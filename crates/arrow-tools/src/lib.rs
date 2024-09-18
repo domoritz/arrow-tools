@@ -115,13 +115,16 @@ pub mod seekable_reader {
 
 #[cfg(test)]
 mod tests {
+    use super::seekable_reader::*;
     use std::fs::File;
     use std::io::{Read, Seek};
-    use super::seekable_reader::*;
 
     #[test]
     fn test_seekable_reader() {
-        let mut seekable_reader = SeekableReader::from_unbuffered_reader(File::open("../../data/simple.csv").unwrap(), None);
+        let mut seekable_reader = SeekableReader::from_unbuffered_reader(
+            File::open("../../data/simple.csv").unwrap(),
+            None,
+        );
         let mut reader = File::open("../../data/simple.csv").unwrap();
 
         let mut buf1 = vec![0; 20];
