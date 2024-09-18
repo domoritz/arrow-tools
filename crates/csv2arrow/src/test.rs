@@ -38,7 +38,9 @@ fn help() -> Result<(), Box<dyn std::error::Error>> {
 
     let assert = cmd.arg("--help").assert();
 
-    assert.success().stdout(predicate::str::contains("Usage: csv2arrow [OPTIONS] <CSV> [ARROW]"));
+    assert.success().stdout(predicate::str::contains(
+        "Usage: csv2arrow [OPTIONS] <CSV> [ARROW]",
+    ));
 
     Ok(())
 }

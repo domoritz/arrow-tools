@@ -34,12 +34,13 @@ fn get_schema() -> Result<(), Box<dyn std::error::Error>> {
 
 #[test]
 fn help() -> Result<(), Box<dyn std::error::Error>> {
-  let mut cmd = Command::cargo_bin("json2arrow")?;
+    let mut cmd = Command::cargo_bin("json2arrow")?;
 
-  let assert = cmd.arg("--help").assert();
+    let assert = cmd.arg("--help").assert();
 
-  assert.success().stdout(predicate::str::contains("Usage: json2arrow [OPTIONS] <JSON> [ARROW]"));
+    assert.success().stdout(predicate::str::contains(
+        "Usage: json2arrow [OPTIONS] <JSON> [ARROW]",
+    ));
 
-  Ok(())
+    Ok(())
 }
-
