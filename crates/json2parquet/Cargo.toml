@@ -11,9 +11,9 @@ description = "Convert JSON files to Parquet"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-parquet = "52.2.0"
-arrow = "52.2.0"
-arrow-schema = { version = "52.0.0", features = ["serde"] }
+parquet = "53.0.0"
+arrow = "53.0.0"
+arrow-schema = { version = "53.0.0", features = ["serde"] }
 serde_json = "1.0.127"
 clap = { version = "4.5.13", features = ["derive"] }
 arrow-tools = { version = "0.19.0", path = "../arrow-tools" }
