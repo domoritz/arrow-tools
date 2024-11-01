@@ -14,7 +14,7 @@ description = "Convert JSON files to Arrow"
 arrow = "53.2.0"
 arrow-schema = { version = "53.0.0", features = ["serde"] }
 serde_json = "1.0.127"
-clap = { version = "4.5.18", features = ["derive"] }
+clap = { version = "4.5.20", features = ["derive"] }
 arrow-tools = { version = "0.19.0", path = "../arrow-tools" }
 
 [dev-dependencies]
