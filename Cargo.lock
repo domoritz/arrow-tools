@@ -329,7 +329,7 @@ dependencies = [
 
 [[package]]
 name = "arrow-tools"
-version = "0.19.0"
+version = "0.20.0"
 
 [[package]]
 name = "assert_cmd"
@@ -563,7 +563,7 @@ dependencies = [
 
 [[package]]
 name = "csv2arrow"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -577,7 +577,7 @@ dependencies = [
 
 [[package]]
 name = "csv2parquet"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -742,7 +742,7 @@ dependencies = [
 
 [[package]]
 name = "json2arrow"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -755,7 +755,7 @@ dependencies = [
 
 [[package]]
 name = "json2parquet"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "arrow",
  "arrow-schema",
