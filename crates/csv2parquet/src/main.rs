@@ -7,6 +7,7 @@ use parquet::{
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
+use regex::Regex;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::{fs::File, io::Seek};
@@ -64,13 +65,31 @@ struct Opts {
     #[clap(long)]
     max_read_records: Option<usize>,
 
-    /// Set whether the CSV file has headers
-    #[clap(long)]
+    /// Set whether the CSV file has headers.
+    #[clap(long, default_value = "true")]
     header: Option<bool>,
 
     /// Set the CSV file's column delimiter as a byte character.
-    #[clap(short, long, default_value = ",")]
-    delimiter: char,
+    #[clap(long)]
+    delimiter: Option<char>,
+
+    /// Specify an escape character.
+    #[clap(long)]
+    escape: Option<char>,
+
+    /// Specify a custom quote character.
+    #[clap(long)]
+    quote: Option<char>,
+
+    /// Specify a comment character.
+    ///
+    /// Lines starting with this character will be ignored
+    #[clap(long)]
+    comment: Option<char>,
+
+    /// Provide a regex to match null values.
+    #[clap(long)]
+    null_regex: Option<Regex>,
 
     /// Set the compression.
     #[clap(short, long, value_enum)]
@@ -102,7 +121,7 @@ struct Opts {
 
     /// Sets flag to enable/disable dictionary encoding for any column.
     #[clap(long)]
-    dictionary: bool,
+    dictionary: Option<bool>,
 
     /// Sets flag to enable/disable statistics for any column.
     #[clap(long, value_enum)]
@@ -135,6 +154,32 @@ fn main() -> Result<(), ParquetError> {
         ))
     };
 
+    let mut format = Format::default();
+
+    if let Some(header) = opts.header {
+        format = format.with_header(header);
+    }
+
+    if let Some(delimiter) = opts.delimiter {
+        format = format.with_delimiter(delimiter as u8);
+    }
+
+    if let Some(escape) = opts.escape {
+        format = format.with_escape(escape as u8);
+    }
+
+    if let Some(quote) = opts.quote {
+        format = format.with_quote(quote as u8);
+    }
+
+    if let Some(comment) = opts.comment {
+        format = format.with_comment(comment as u8);
+    }
+
+    if let Some(regex) = opts.null_regex {
+        format = format.with_null_regex(regex);
+    }
+
     let schema = match opts.schema_file {
         Some(schema_def_file_path) => {
             let schema_file = match File::open(&schema_def_file_path) {
@@ -152,18 +197,12 @@ fn main() -> Result<(), ParquetError> {
                 ))),
             }
         }
-        _ => {
-            let format = Format::default()
-                .with_delimiter(opts.delimiter as u8)
-                .with_header(opts.header.unwrap_or(true));
-
-            match format.infer_schema(&mut input, opts.max_read_records) {
-                Ok((schema, _size)) => Ok(schema),
-                Err(error) => Err(ParquetError::General(format!(
-                    "Error inferring schema: {error}"
-                ))),
-            }
-        }
+        _ => match format.infer_schema(&mut input, opts.max_read_records) {
+            Ok((schema, _size)) => Ok(schema),
+            Err(error) => Err(ParquetError::General(format!(
+                "Error inferring schema: {error}"
+            ))),
+        },
     }?;
 
     if opts.print_schema || opts.dry {
@@ -176,9 +215,7 @@ fn main() -> Result<(), ParquetError> {
     }
 
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new(schema_ref)
-        .with_header(opts.header.unwrap_or(true))
-        .with_delimiter(opts.delimiter as u8);
+    let builder = ReaderBuilder::new(schema_ref).with_format(format);
 
     input.rewind()?;
 
@@ -186,7 +223,11 @@ fn main() -> Result<(), ParquetError> {
 
     let output = File::create(opts.output)?;
 
-    let mut props = WriterProperties::builder().set_dictionary_enabled(opts.dictionary);
+    let mut props = WriterProperties::builder();
+
+    if let Some(enabled) = opts.dictionary {
+        props = props.set_dictionary_enabled(enabled);
+    }
 
     if let Some(statistics) = opts.statistics {
         let statistics = match statistics {
