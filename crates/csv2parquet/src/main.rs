@@ -197,14 +197,12 @@ fn main() -> Result<(), ParquetError> {
                 ))),
             }
         }
-        _ => {
-            match format.infer_schema(&mut input, opts.max_read_records) {
-                Ok((schema, _size)) => Ok(schema),
-                Err(error) => Err(ParquetError::General(format!(
-                    "Error inferring schema: {error}"
-                ))),
-            }
-        }
+        _ => match format.infer_schema(&mut input, opts.max_read_records) {
+            Ok((schema, _size)) => Ok(schema),
+            Err(error) => Err(ParquetError::General(format!(
+                "Error inferring schema: {error}"
+            ))),
+        },
     }?;
 
     if opts.print_schema || opts.dry {
@@ -217,8 +215,7 @@ fn main() -> Result<(), ParquetError> {
     }
 
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new(schema_ref)
-        .with_format(format);
+    let builder = ReaderBuilder::new(schema_ref).with_format(format);
 
     input.rewind()?;
 

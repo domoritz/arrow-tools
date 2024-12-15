@@ -1,11 +1,11 @@
 use arrow::{csv::reader::Format, csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
 use arrow_tools::seekable_reader::{SeekRead, SeekableReader};
 use clap::{Parser, ValueHint};
+use regex::Regex;
 use std::io::stdout;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::{fs::File, io::Seek, io::Write};
-use regex::Regex;
 
 #[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
@@ -121,14 +121,12 @@ fn main() -> Result<(), ArrowError> {
                 ))),
             }
         }
-        _ => {
-            match format.infer_schema(&mut input, opts.max_read_records) {
-                Ok((schema, _size)) => Ok(schema),
-                Err(error) => Err(ArrowError::SchemaError(format!(
-                    "Error inferring schema: {error}"
-                ))),
-            }
-        }
+        _ => match format.infer_schema(&mut input, opts.max_read_records) {
+            Ok((schema, _size)) => Ok(schema),
+            Err(error) => Err(ArrowError::SchemaError(format!(
+                "Error inferring schema: {error}"
+            ))),
+        },
     }?;
 
     if opts.print_schema || opts.dry {
@@ -141,8 +139,7 @@ fn main() -> Result<(), ArrowError> {
     }
 
     let schema_ref = Arc::new(schema);
-    let builder = ReaderBuilder::new(schema_ref)
-        .with_format(format);
+    let builder = ReaderBuilder::new(schema_ref).with_format(format);
 
     input.rewind()?;
 
