@@ -36,24 +36,51 @@ cargo binstall csv2arrow
 Usage: csv2arrow [OPTIONS] <CSV> [ARROW]
 
 Arguments:
-  <CSV>    Input CSV file, stdin if not present
-  [ARROW]  Output file, stdout if not present
+  <CSV>
+          Input CSV file, stdin if not present
+
+  [ARROW]
+          Output file, stdout if not present
 
 Options:
   -s, --schema-file <SCHEMA_FILE>
           File with Arrow schema in JSON format
+
   -m, --max-read-records <MAX_READ_RECORDS>
           The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed
+
       --header <HEADER>
-          Set whether the CSV file has headers [possible values: true, false]
-  -d, --delimiter <DELIMITER>
-          Set the CSV file's column delimiter as a byte character [default: ,]
+          Set whether the CSV file has headers
+
+          [default: true]
+          [possible values: true, false]
+
+      --delimiter <DELIMITER>
+          Set the CSV file's column delimiter as a byte character
+
+      --escape <ESCAPE>
+          Specify an escape character
+
+      --quote <QUOTE>
+          Specify a custom quote character
+
+      --comment <COMMENT>
+          Specify a comment character.
+
+          Lines starting with this character will be ignored
+
+      --null-regex <NULL_REGEX>
+          Provide a regex to match null values
+
   -p, --print-schema
           Print the schema to stderr
+
   -n, --dry
           Only print the schema
+
   -h, --help
-          Print help
+          Print help (see a summary with '-h')
+
   -V, --version
           Print version
 ```

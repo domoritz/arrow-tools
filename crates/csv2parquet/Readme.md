@@ -36,44 +36,89 @@ cargo binstall csv2parquet
 Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>
 
 Arguments:
-  <CSV>      Input CSV fil, stdin if not present
-  <PARQUET>  Output file
+  <CSV>
+          Input CSV fil, stdin if not present
+
+  <PARQUET>
+          Output file
 
 Options:
   -s, --schema-file <SCHEMA_FILE>
           File with Arrow schema in JSON format
+
       --max-read-records <MAX_READ_RECORDS>
           The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed
+
       --header <HEADER>
-          Set whether the CSV file has headers [possible values: true, false]
-  -d, --delimiter <DELIMITER>
-          Set the CSV file's column delimiter as a byte character [default: ,]
+          Set whether the CSV file has headers
+
+          [default: true]
+          [possible values: true, false]
+
+      --delimiter <DELIMITER>
+          Set the CSV file's column delimiter as a byte character
+
+      --escape <ESCAPE>
+          Specify an escape character
+
+      --quote <QUOTE>
+          Specify a custom quote character
+
+      --comment <COMMENT>
+          Specify a comment character.
+
+          Lines starting with this character will be ignored
+
+      --null-regex <NULL_REGEX>
+          Provide a regex to match null values
+
   -c, --compression <COMPRESSION>
-          Set the compression [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
+          Set the compression
+
+          [possible values: uncompressed, snappy, gzip, lzo, brotli, lz4, zstd, lz4-raw]
+
   -e, --encoding <ENCODING>
-          Sets encoding for any column [possible values: plain, plain-dictionary, rle, rle-dictionary, delta-binary-packed, delta-length-byte-array, delta-byte-array, byte-stream-split]
+          Sets encoding for any column
+
+          [possible values: plain, plain-dictionary, rle, rle-dictionary, delta-binary-packed, delta-length-byte-array, delta-byte-array, byte-stream-split]
+
       --data-page-size-limit <DATA_PAGE_SIZE_LIMIT>
           Sets data page size limit
+
       --dictionary-page-size-limit <DICTIONARY_PAGE_SIZE_LIMIT>
           Sets dictionary page size limit
+
       --write-batch-size <WRITE_BATCH_SIZE>
           Sets write batch size
+
       --max-row-group-size <MAX_ROW_GROUP_SIZE>
           Sets max size for a row group
+
       --created-by <CREATED_BY>
           Sets "created by" property
-      --dictionary
+
+      --dictionary <DICTIONARY>
           Sets flag to enable/disable dictionary encoding for any column
+
+          [possible values: true, false]
+
       --statistics <STATISTICS>
-          Sets flag to enable/disable statistics for any column [possible values: none, chunk, page]
+          Sets flag to enable/disable statistics for any column
+
+          [possible values: none, chunk, page]
+
       --max-statistics-size <MAX_STATISTICS_SIZE>
           Sets max statistics size for any column. Applicable only if statistics are enabled
+
   -p, --print-schema
           Print the schema to stderr
+
   -n, --dry
           Only print the schema
+
   -h, --help
-          Print help
+          Print help (see a summary with '-h')
+
   -V, --version
           Print version
 ```
