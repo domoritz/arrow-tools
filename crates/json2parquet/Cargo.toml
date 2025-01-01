@@ -20,4 +20,4 @@ arrow-tools = { version = "0.20.0", path = "../arrow-tools" }
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
-predicates = "3.1.0"
+predicates = "3.1.3"
