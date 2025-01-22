@@ -49,7 +49,7 @@ enum ParquetEnabledStatistics {
 #[derive(Parser)]
 #[clap(version = env!("CARGO_PKG_VERSION"), author = "Dominik Moritz <domoritz@cmu.edu>")]
 struct Opts {
-    /// Input CSV fil, stdin if not present.
+    /// Input CSV file, stdin if not present.
     #[clap(name = "CSV", value_parser, value_hint = ValueHint::AnyPath)]
     input: PathBuf,
 
