@@ -37,7 +37,7 @@ Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>
 
 Arguments:
   <CSV>
-          Input CSV fil, stdin if not present
+          Input CSV file, stdin if not present
 
   <PARQUET>
           Output file
