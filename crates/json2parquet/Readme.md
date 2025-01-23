@@ -62,8 +62,6 @@ Options:
           Sets flag to enable/disable dictionary encoding for any column
       --statistics <STATISTICS>
           Sets flag to enable/disable statistics for any column [possible values: none, chunk, page]
-      --max-statistics-size <MAX_STATISTICS_SIZE>
-          Sets max statistics size for any column. Applicable only if statistics are enabled
   -p, --print-schema
           Print the schema to stderr
   -n, --dry

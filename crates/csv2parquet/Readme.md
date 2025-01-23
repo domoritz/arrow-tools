@@ -107,9 +107,6 @@ Options:
 
           [possible values: none, chunk, page]
 
-      --max-statistics-size <MAX_STATISTICS_SIZE>
-          Sets max statistics size for any column. Applicable only if statistics are enabled
-
   -p, --print-schema
           Print the schema to stderr
 

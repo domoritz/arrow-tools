@@ -127,10 +127,6 @@ struct Opts {
     #[clap(long, value_enum)]
     statistics: Option<ParquetEnabledStatistics>,
 
-    /// Sets max statistics size for any column. Applicable only if statistics are enabled.
-    #[clap(long)]
-    max_statistics_size: Option<usize>,
-
     /// Print the schema to stderr.
     #[clap(short, long)]
     print_schema: bool,
@@ -291,10 +287,6 @@ fn main() -> Result<(), ParquetError> {
 
     if let Some(created_by) = opts.created_by {
         props = props.set_created_by(created_by);
-    }
-
-    if let Some(size) = opts.max_statistics_size {
-        props = props.set_max_statistics_size(size);
     }
 
     let mut writer = ArrowWriter::try_new(output, reader.schema(), Some(props.build()))?;
