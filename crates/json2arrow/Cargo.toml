@@ -1,6 +1,6 @@
 [package]
 name = "json2arrow"
-version = "0.21.0"
+version = "0.21.1"
 authors = ["Dominik Moritz <domoritz@cmu.edu>"]
 license = "MIT/Apache-2.0"
 edition = "2021"
@@ -15,7 +15,7 @@ arrow = "54.0.0"
 arrow-schema = { version = "54.0.0", features = ["serde"] }
 serde_json = "1.0.134"
 clap = { version = "4.5.23", features = ["derive"] }
-arrow-tools = { version = "0.21.0", path = "../arrow-tools" }
+arrow-tools = { version = "0.21.1", path = "../arrow-tools" }
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
