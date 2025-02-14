@@ -322,6 +322,9 @@ dependencies = [
 [[package]]
 name = "arrow-tools"
 version = "0.21.1"
+dependencies = [
+ "flate2",
+]
 
 [[package]]
 name = "assert_cmd"
@@ -486,6 +489,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f46ad14479a25103f283c0f10005961cf086d8dc42205bb44c46ac563475dca6"
 
 [[package]]
+name = "cmake"
+version = "0.1.54"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e7caa3f9de89ddbe2c607f4101924c5abec803763ae9534e4f4d7d8f84aa81f0"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "colorchoice"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -562,6 +574,7 @@ dependencies = [
  "arrow-tools",
  "assert_cmd",
  "clap",
+ "flate2",
  "predicates",
  "regex",
  "serde_json",
@@ -576,6 +589,7 @@ dependencies = [
  "arrow-tools",
  "assert_cmd",
  "clap",
+ "flate2",
  "parquet",
  "predicates",
  "regex",
@@ -612,11 +626,12 @@ dependencies = [
 
 [[package]]
 name = "flate2"
-version = "1.0.34"
+version = "1.0.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1b589b4dc103969ad3cf85c950899926ec64300a1a46d76c03a6072957036f0"
+checksum = "c936bfdafb507ebbf50b8074c54fa31c5be9a1e7e5f467dd659697041407d07c"
 dependencies = [
  "crc32fast",
+ "libz-ng-sys",
  "miniz_oxide",
 ]
 
@@ -741,6 +756,7 @@ dependencies = [
  "arrow-tools",
  "assert_cmd",
  "clap",
+ "flate2",
  "predicates",
  "serde_json",
 ]
@@ -754,6 +770,7 @@ dependencies = [
  "arrow-tools",
  "assert_cmd",
  "clap",
+ "flate2",
  "parquet",
  "predicates",
  "serde_json",
@@ -840,6 +857,16 @@ name = "libm"
 version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ec2a862134d2a7d32d7983ddcdd1c4923530833c9f2ea1a44fc5fa473989058"
+
+[[package]]
+name = "libz-ng-sys"
+version = "1.1.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7cee1488e961a80d172564fd6fcda11d8a4ac6672c06fe008e9213fa60520c2b"
+dependencies = [
+ "cmake",
+ "libc",
+]
 
 [[package]]
 name = "log"

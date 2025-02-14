@@ -1,7 +1,9 @@
 use arrow::{csv::reader::Format, csv::ReaderBuilder, error::ArrowError, ipc::writer::FileWriter};
 use arrow_tools::seekable_reader::{SeekRead, SeekableReader};
 use clap::{Parser, ValueHint};
+use flate2::read::MultiGzDecoder;
 use regex::Regex;
+use std::ffi::OsStr;
 use std::io::stdout;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -66,7 +68,12 @@ fn main() -> Result<(), ArrowError> {
 
     let mut file = File::open(&opts.input)?;
 
-    let mut input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+    let mut input: Box<dyn SeekRead> = if opts.input.extension() == Some(OsStr::new("gz")) {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            MultiGzDecoder::new(file),
+            opts.max_read_records,
+        ))
+    } else if file.rewind().is_ok() {
         Box::new(file)
     } else {
         Box::new(SeekableReader::from_unbuffered_reader(

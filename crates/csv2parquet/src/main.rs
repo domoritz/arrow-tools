@@ -1,6 +1,7 @@
 use arrow::csv::{reader::Format, ReaderBuilder};
 use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
+use flate2::read::MultiGzDecoder;
 use parquet::{
     arrow::ArrowWriter,
     basic::{BrotliLevel, Compression, Encoding, GzipLevel, ZstdLevel},
@@ -8,6 +9,7 @@ use parquet::{
     file::properties::{EnabledStatistics, WriterProperties},
 };
 use regex::Regex;
+use std::ffi::OsStr;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::{fs::File, io::Seek};
@@ -141,7 +143,12 @@ fn main() -> Result<(), ParquetError> {
 
     let mut file = File::open(&opts.input)?;
 
-    let mut input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+    let mut input: Box<dyn SeekRead> = if opts.input.extension() == Some(OsStr::new("gz")) {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            MultiGzDecoder::new(file),
+            opts.max_read_records,
+        ))
+    } else if file.rewind().is_ok() {
         Box::new(file)
     } else {
         Box::new(SeekableReader::from_unbuffered_reader(
