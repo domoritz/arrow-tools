@@ -2,6 +2,8 @@ use arrow::record_batch::RecordBatchReader;
 use arrow::{error::ArrowError, ipc::writer::FileWriter, json::ReaderBuilder};
 use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
+use flate2::read::MultiGzDecoder;
+use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{stdout, BufReader, Seek, Write};
 use std::path::PathBuf;
@@ -40,7 +42,12 @@ fn main() -> Result<(), ArrowError> {
 
     let mut file = File::open(&opts.input)?;
 
-    let input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+    let input: Box<dyn SeekRead> = if opts.input.extension() == Some(OsStr::new("gz")) {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            MultiGzDecoder::new(file),
+            opts.max_read_records,
+        ))
+    } else if file.rewind().is_ok() {
         Box::new(file)
     } else {
         Box::new(SeekableReader::from_unbuffered_reader(

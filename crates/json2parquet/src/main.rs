@@ -2,12 +2,14 @@ use arrow::json::ReaderBuilder;
 use arrow::record_batch::RecordBatchReader;
 use arrow_tools::seekable_reader::*;
 use clap::{Parser, ValueHint};
+use flate2::read::MultiGzDecoder;
 use parquet::{
     arrow::ArrowWriter,
     basic::{BrotliLevel, Compression, Encoding, GzipLevel, ZstdLevel},
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
+use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{BufReader, Seek};
 use std::path::PathBuf;
@@ -116,7 +118,12 @@ fn main() -> Result<(), ParquetError> {
 
     let mut file = File::open(&opts.input)?;
 
-    let input: Box<dyn SeekRead> = if file.rewind().is_ok() {
+    let input: Box<dyn SeekRead> = if opts.input.extension() == Some(OsStr::new("gz")) {
+        Box::new(SeekableReader::from_unbuffered_reader(
+            MultiGzDecoder::new(file),
+            opts.max_read_records,
+        ))
+    } else if file.rewind().is_ok() {
         Box::new(file)
     } else {
         Box::new(SeekableReader::from_unbuffered_reader(

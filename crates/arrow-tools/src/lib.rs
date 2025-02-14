@@ -19,6 +19,7 @@ pub mod seekable_reader {
 
     impl SeekRead for fs::File {}
     impl SeekRead for SeekableReader<fs::File> {}
+    impl SeekRead for SeekableReader<flate2::read::MultiGzDecoder<fs::File>> {}
 
     const BUFFER_SIZE: usize = 8192;
     impl<R: std::io::Read> SeekableReader<R> {

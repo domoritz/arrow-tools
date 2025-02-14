@@ -8,3 +8,4 @@ repository = "https://github.com/domoritz/arrow-tools"
 description = "Utilities for arrow-tools packages."
 
 [dependencies]
+flate2 = { version = "1.0.35", features = ["zlib-ng"] }
