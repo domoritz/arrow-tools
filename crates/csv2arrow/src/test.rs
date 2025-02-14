@@ -33,6 +33,36 @@ fn get_schema() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+fn get_schema_gz() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("csv2arrow")?;
+
+    let assert = cmd.arg("../../data/simple.csv.gz").arg("-n").assert();
+
+    assert.success().stdout(predicate::str::contains(
+        r#""fields": [
+    {
+      "name": "a",
+      "data_type": "Int64",
+      "nullable": true,
+      "dict_id": 0,
+      "dict_is_ordered": false,
+      "metadata": {}
+    },
+    {
+      "name": "b",
+      "data_type": "Boolean",
+      "nullable": true,
+      "dict_id": 0,
+      "dict_is_ordered": false,
+      "metadata": {}
+    }
+  ]"#,
+    ));
+
+    Ok(())
+}
+
+#[test]
 fn help() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("csv2arrow")?;
 
