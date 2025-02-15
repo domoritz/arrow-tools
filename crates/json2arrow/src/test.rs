@@ -68,9 +68,13 @@ fn help() -> Result<(), Box<dyn std::error::Error>> {
 
     let assert = cmd.arg("--help").assert();
 
-    assert.success().stdout(predicate::str::contains(
-        "Usage: json2arrow [OPTIONS] <JSON> [ARROW]",
-    ));
+    assert
+        .success()
+        .stdout(predicate::str::contains(if cfg!(windows) {
+            "Usage: json2arrow.exe [OPTIONS] <JSON> [ARROW]"
+        } else {
+            "Usage: json2arrow [OPTIONS] <JSON> [ARROW]"
+        }));
 
     Ok(())
 }
