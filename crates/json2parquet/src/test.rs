@@ -79,7 +79,7 @@ fn help() -> Result<(), Box<dyn std::error::Error>> {
     assert
         .success()
         .stdout(predicate::str::contains(if cfg!(windows) {
-            "Usage: json2parquet.csv [OPTIONS] <JSON> <PARQUET>"
+            "Usage: json2parquet.exe [OPTIONS] <JSON> <PARQUET>"
         } else {
             "Usage: json2parquet [OPTIONS] <JSON> <PARQUET>"
         }));
