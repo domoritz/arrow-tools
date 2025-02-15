@@ -12,7 +12,15 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Test Rust on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - { os: macos-latest }
+        - { os: windows-latest }
+        - { os: macos-latest }
 
     steps:
       - uses: actions/checkout@v4
@@ -23,8 +31,6 @@ jobs:
           cache: true
       - name: Check formatting
         run: cargo fmt -- --check
-      - name: Check
-        run: cargo check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
       - name: Build
