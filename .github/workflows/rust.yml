@@ -33,6 +33,8 @@ jobs:
         run: cargo fmt -- --check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
+      - name: Build
+        run: cargo build --verbose
       - name: Test
         run: cargo test --all
 
