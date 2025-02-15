@@ -11,8 +11,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    name: Test Rust on ${{ matrix.os }}
+  test:
+    name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -33,13 +33,11 @@ jobs:
         run: cargo fmt -- --check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
-      - name: Build
-        run: cargo build --verbose
       - name: Test
         run: cargo test --all
 
   automerge:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
 
     permissions:
