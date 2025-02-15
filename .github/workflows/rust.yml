@@ -11,8 +11,16 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - { os: ubuntu-latest }
+        - { os: windows-latest }
+        - { os: macos-latest }
 
     steps:
       - uses: actions/checkout@v4
@@ -23,8 +31,6 @@ jobs:
           cache: true
       - name: Check formatting
         run: cargo fmt -- --check
-      - name: Check
-        run: cargo check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
       - name: Build
@@ -33,7 +39,7 @@ jobs:
         run: cargo test --all
 
   automerge:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
 
     permissions:

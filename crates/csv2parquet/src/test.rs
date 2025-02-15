@@ -76,9 +76,13 @@ fn help() -> Result<(), Box<dyn std::error::Error>> {
 
     let assert = cmd.arg("--help").assert();
 
-    assert.success().stdout(predicate::str::contains(
-        "Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>",
-    ));
+    assert
+        .success()
+        .stdout(predicate::str::contains(if cfg!(windows) {
+            "Usage: csv2parquet.exe [OPTIONS] <CSV> <PARQUET>"
+        } else {
+            "Usage: csv2parquet [OPTIONS] <CSV> <PARQUET>"
+        }));
 
     Ok(())
 }

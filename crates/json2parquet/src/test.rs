@@ -76,9 +76,13 @@ fn help() -> Result<(), Box<dyn std::error::Error>> {
 
     let assert = cmd.arg("--help").assert();
 
-    assert.success().stdout(predicate::str::contains(
-        "Usage: json2parquet [OPTIONS] <JSON> <PARQUET>",
-    ));
+    assert
+        .success()
+        .stdout(predicate::str::contains(if cfg!(windows) {
+            "Usage: json2parquet.exe [OPTIONS] <JSON> <PARQUET>"
+        } else {
+            "Usage: json2parquet [OPTIONS] <JSON> <PARQUET>"
+        }));
 
     Ok(())
 }
