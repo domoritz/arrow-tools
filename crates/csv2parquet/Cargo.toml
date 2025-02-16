@@ -19,6 +19,9 @@ clap = { version = "4.5.27", features = ["derive"] }
 arrow-tools = { version = "0.22.2", path = "../arrow-tools" }
 regex = "1.11.1"
 flate2 = { version = "1.0.35", features = ["zlib-ng"] }
+# See: https://github.com/rust-lang/libz-sys/issues/225
+libz-ng-sys = { version = "<1.1.20" }
+
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
