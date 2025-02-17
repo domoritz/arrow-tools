@@ -1,7 +1,7 @@
 use super::seekable_reader::*;
+use crate::clap_comma_separated;
 use std::fs::File;
 use std::io::{Read, Seek};
-use crate::clap_comma_separated;
 
 #[test]
 fn seekable_reader() {

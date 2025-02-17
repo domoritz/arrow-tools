@@ -2,8 +2,8 @@
 //! This crate serves a general util library to go along
 //! with all of the crates within the arrow-tools suite.
 
-use std::collections::{HashMap, HashSet};
 use arrow_schema::{DataType, Field, Fields, Schema};
+use std::collections::{HashMap, HashSet};
 
 pub mod seekable_reader {
     use std::fs;
@@ -130,12 +130,17 @@ pub fn clap_comma_separated(arg: &str) -> Result<HashSet<String>, String> {
     }
 }
 
-
 /// Applies user-provided data types to the schema
-pub fn apply_schema_overrides(schema: &mut Schema, i32_cols: Option<HashSet<String>>, i64_cols: Option<HashSet<String>>, f32_cols: Option<HashSet<String>>, f64_cols: Option<HashSet<String>>) -> Result<(), String>{
+pub fn apply_schema_overrides(
+    schema: &mut Schema,
+    i32_cols: Option<HashSet<String>>,
+    i64_cols: Option<HashSet<String>>,
+    f32_cols: Option<HashSet<String>>,
+    f64_cols: Option<HashSet<String>>,
+) -> Result<(), String> {
     if i32_cols.is_none() && i64_cols.is_none() && f32_cols.is_none() && f64_cols.is_none() {
         // There is no need to make any changes to the current scheme
-        return Ok(())
+        return Ok(());
     }
 
     let mut default_int_type = DataType::Int64;
@@ -147,14 +152,10 @@ pub fn apply_schema_overrides(schema: &mut Schema, i32_cols: Option<HashSet<Stri
     let f64_cols = f64_cols.unwrap_or_default();
 
     if i32_cols.contains("*") && i64_cols.contains("*") {
-        return Err(
-            "i32 and i64 can't both be the default data types for integers".to_string(),
-        );
+        return Err("i32 and i64 can't both be the default data types for integers".to_string());
     }
     if f32_cols.contains("*") && f64_cols.contains("*") {
-        return Err(
-            "f32 and f64 can't both be the default data types for floats".to_string(),
-        );
+        return Err("f32 and f64 can't both be the default data types for floats".to_string());
     }
 
     let mut overrides = HashMap::<String, DataType>::new();

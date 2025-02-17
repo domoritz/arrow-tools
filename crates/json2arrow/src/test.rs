@@ -69,7 +69,8 @@ fn apply_schema1() -> Result<(), Box<dyn std::error::Error>> {
     let assert = cmd
         .arg("../../data/simple.json.gz")
         .arg("--i32=__all__")
-        .arg("-n").assert();
+        .arg("-n")
+        .assert();
 
     assert.success().stdout(predicate::str::contains(
         r#""fields": [
@@ -102,7 +103,8 @@ fn apply_schema2() -> Result<(), Box<dyn std::error::Error>> {
     let assert = cmd
         .arg("../../data/simple.json.gz")
         .arg("--f32=a")
-        .arg("-n").assert();
+        .arg("-n")
+        .assert();
 
     assert.success().stdout(predicate::str::contains(
         r#""fields": [
