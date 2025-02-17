@@ -1,4 +1,5 @@
 use super::seekable_reader::*;
+use crate::clap_comma_separated;
 use std::fs::File;
 use std::io::{Read, Seek};
 
@@ -18,4 +19,12 @@ fn seekable_reader() {
     let mut buf3 = vec![0; 20];
     seekable_reader.read_exact(&mut buf3).unwrap();
     assert_eq!(buf3, buf2);
+}
+
+#[test]
+fn test_clap_comma_separated() {
+    let cols = clap_comma_separated("foo,bar,baz").unwrap();
+    assert!(cols.contains(&"foo".to_string()));
+    assert!(cols.contains(&"bar".to_string()));
+    assert!(cols.contains(&"baz".to_string()));
 }
