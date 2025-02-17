@@ -111,7 +111,7 @@ fn main() -> Result<(), ArrowError> {
     }?;
 
     apply_schema_overrides(&mut schema, opts.i32, opts.i64, opts.f32, opts.f64)
-        .map_err(|err| ArrowError::SchemaError(err))?;
+        .map_err(ArrowError::SchemaError)?;
 
     if opts.print_schema || opts.dry {
         let json = serde_json::to_string_pretty(&schema).unwrap();

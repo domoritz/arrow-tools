@@ -230,7 +230,7 @@ fn main() -> Result<(), ParquetError> {
     }?;
 
     apply_schema_overrides(&mut schema, opts.i32, opts.i64, opts.f32, opts.f64)
-        .map_err(|err| ParquetError::General(err))?;
+        .map_err(ParquetError::General)?;
 
     if opts.print_schema || opts.dry {
         let json = serde_json::to_string_pretty(&schema).unwrap();
