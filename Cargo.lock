@@ -324,6 +324,7 @@ dependencies = [
 name = "arrow-tools"
 version = "0.22.3"
 dependencies = [
+ "arrow-schema",
  "flate2",
  "libz-ng-sys",
 ]

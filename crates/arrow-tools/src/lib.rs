@@ -2,6 +2,9 @@
 //! This crate serves a general util library to go along
 //! with all of the crates within the arrow-tools suite.
 
+use std::collections::{HashMap, HashSet};
+use arrow_schema::{DataType, Field, Fields, Schema};
+
 pub mod seekable_reader {
     use std::fs;
     use std::io;
@@ -112,6 +115,103 @@ pub mod seekable_reader {
             }
         }
     }
+}
+
+/// A clap helper function to parse comma separated columns as a HashSet
+pub fn clap_comma_separated(arg: &str) -> Result<HashSet<String>, String> {
+    if arg.is_empty() {
+        Ok(HashSet::new())
+    } else {
+        let mut hashset = HashSet::new();
+        for s in arg.split(',') {
+            hashset.insert(s.to_string());
+        }
+        Ok(hashset)
+    }
+}
+
+
+/// Applies user-provided data types to the schema
+pub fn apply_schema_overrides(schema: &mut Schema, i32_cols: Option<HashSet<String>>, i64_cols: Option<HashSet<String>>, f32_cols: Option<HashSet<String>>, f64_cols: Option<HashSet<String>>) -> Result<(), String>{
+    if i32_cols.is_none() && i64_cols.is_none() && f32_cols.is_none() && f64_cols.is_none() {
+        // There is no need to make any changes to the current scheme
+        return Ok(())
+    }
+
+    let mut default_int_type = DataType::Int64;
+    let mut default_float_type = DataType::Float64;
+
+    let i32_cols = i32_cols.unwrap_or_default();
+    let i64_cols = i64_cols.unwrap_or_default();
+    let f32_cols = f32_cols.unwrap_or_default();
+    let f64_cols = f64_cols.unwrap_or_default();
+
+    if i32_cols.contains("*") && i64_cols.contains("*") {
+        return Err(
+            "i32 and i64 can't both be the default data types for integers".to_string(),
+        );
+    }
+    if f32_cols.contains("*") && f64_cols.contains("*") {
+        return Err(
+            "f32 and f64 can't both be the default data types for floats".to_string(),
+        );
+    }
+
+    let mut overrides = HashMap::<String, DataType>::new();
+    for c in i32_cols {
+        if c == "*" || c == "__all__" {
+            default_int_type = DataType::Int32;
+            break;
+        }
+        overrides.insert(c, DataType::Int32);
+    }
+    for c in i64_cols {
+        if c == "*" || c == "__all__" {
+            default_int_type = DataType::Int64;
+            break;
+        }
+        overrides.insert(c, DataType::Int64);
+    }
+    for c in f32_cols {
+        if c == "*" || c == "__all__" {
+            default_float_type = DataType::Float32;
+            break;
+        }
+        overrides.insert(c, DataType::Float32);
+    }
+    for c in f64_cols {
+        if c == "*" || c == "__all__" {
+            default_float_type = DataType::Float64;
+            break;
+        }
+        overrides.insert(c, DataType::Float64);
+    }
+
+    let mut new_fields: Vec<Field> = Vec::with_capacity(schema.fields.len());
+    for field in &schema.fields {
+        let name = field.name();
+        if let Some(datatype) = overrides.remove(name) {
+            new_fields.push(Field::new(name, datatype, field.is_nullable()));
+        } else {
+            match field.data_type() {
+                &DataType::Int64 => new_fields.push(Field::new(
+                    name,
+                    default_int_type.clone(),
+                    field.is_nullable(),
+                )),
+                &DataType::Float64 => new_fields.push(Field::new(
+                    name,
+                    default_float_type.clone(),
+                    field.is_nullable(),
+                )),
+                datatype => {
+                    new_fields.push(Field::new(name, datatype.clone(), field.is_nullable()))
+                }
+            }
+        }
+    }
+    schema.fields = Fields::from(new_fields);
+    Ok(())
 }
 
 #[cfg(test)]

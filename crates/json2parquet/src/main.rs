@@ -1,6 +1,6 @@
 use arrow::json::ReaderBuilder;
 use arrow::record_batch::RecordBatchReader;
-use arrow_tools::seekable_reader::*;
+use arrow_tools::{apply_schema_overrides, clap_comma_separated, seekable_reader::*};
 use clap::{Parser, ValueHint};
 use flate2::read::MultiGzDecoder;
 use parquet::{
@@ -9,6 +9,7 @@ use parquet::{
     errors::ParquetError,
     file::properties::{EnabledStatistics, WriterProperties},
 };
+use std::collections::HashSet;
 use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{BufReader, Seek};
@@ -63,6 +64,26 @@ struct Opts {
     /// File with Arrow schema in JSON format.
     #[clap(short = 's', long, value_parser, value_hint = ValueHint::AnyPath)]
     schema_file: Option<PathBuf>,
+
+    /// Comma separated list of Int32 columns. Use "*" or "__all__" to set Int32 as a default
+    /// data type for integer columns. This parameter has a higher priority than --schema-file
+    #[clap(long, value_parser=clap_comma_separated, value_name="COLUMNS")]
+    i32: Option<HashSet<String>>,
+
+    /// Comma separated list of Int64 columns. Int64 as the default data type for integer columns.
+    /// This parameter has a higher priority than --schema-file
+    #[clap(long, value_parser=clap_comma_separated, value_name="COLUMNS")]
+    i64: Option<HashSet<String>>,
+
+    /// Comma separated list of Float32 columns. Use "*" or "__all__" to set Float32 as a default
+    /// data type for float columns. This parameter has a higher priority than --schema-file
+    #[clap(long, value_parser=clap_comma_separated, value_name="COLUMNS")]
+    f32: Option<HashSet<String>>,
+
+    /// Comma separated list of Float64 columns. Float64 is the  default data type for float
+    /// columns. This parameter has a higher priority than --schema-file
+    #[clap(long, value_parser=clap_comma_separated, value_name="COLUMNS")]
+    f64: Option<HashSet<String>>,
 
     /// The number of records to infer the schema from. All rows if not present. Setting max-read-records to zero will stop schema inference and all columns will be string typed.
     #[clap(long)]
@@ -134,7 +155,7 @@ fn main() -> Result<(), ParquetError> {
 
     let mut buf_reader = BufReader::new(input);
 
-    let schema = if let Some(schema_def_file_path) = opts.schema_file {
+    let mut schema = if let Some(schema_def_file_path) = opts.schema_file {
         let schema_file = File::open(&schema_def_file_path).map_err(|error| {
             ParquetError::General(format!(
                 "Error opening schema file: {schema_def_file_path:?}, message: {error}"
@@ -148,6 +169,9 @@ fn main() -> Result<(), ParquetError> {
             .map_err(|err| ParquetError::General(format!("Error inferring schema: {err}")))
             .map(|result| result.0)
     }?;
+
+    apply_schema_overrides(&mut schema, opts.i32, opts.i64, opts.f32, opts.f64)
+        .map_err(|err| ParquetError::General(err))?;
 
     if opts.print_schema || opts.dry {
         let json = serde_json::to_string_pretty(&schema).unwrap();
