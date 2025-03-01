@@ -10,4 +10,4 @@ description = "Utilities for arrow-tools packages."
 [dependencies]
 flate2 = { version = "1.1.0", features = ["zlib-ng"] }
 # See: https://github.com/rust-lang/libz-sys/issues/225
-libz-ng-sys = { version = "<1.1.20" }
+libz-ng-sys = { version = "<1.1.22" }
