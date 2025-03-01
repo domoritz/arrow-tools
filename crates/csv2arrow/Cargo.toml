@@ -13,7 +13,7 @@ description = "Convert CSV files to Arrow"
 [dependencies]
 arrow = "54.2.1"
 arrow-schema = { version = "54.0.0", features = ["serde"] }
-serde_json = "1.0.138"
+serde_json = "1.0.139"
 clap = { version = "4.5.31", features = ["derive"] }
 arrow-tools = { version = "0.22.3", path = "../arrow-tools" }
 regex = "1.11.1"
