@@ -22,5 +22,5 @@ flate2 = { version = "1.1.0", features = ["zlib-ng"] }
 libz-ng-sys = { version = "<1.1.23" }
 
 [dev-dependencies]
-assert_cmd = "2.0.14"
+assert_cmd = "2.0.17"
 predicates = "3.1.3"
