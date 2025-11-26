@@ -1,6 +1,6 @@
 [package]
 name = "json2arrow"
-version = "0.23.0"
+version = "0.24.0"
 authors = ["Dominik Moritz <domoritz@cmu.edu>"]
 license = "MIT/Apache-2.0"
 edition = "2021"
@@ -15,7 +15,7 @@ arrow = "57.1.0"
 arrow-schema = { version = "57.1.0", features = ["serde"] }
 serde_json = "1.0.145"
 clap = { version = "4.5.51", features = ["derive"] }
-arrow-tools = { version = "0.23.0", path = "../arrow-tools" }
+arrow-tools = { version = "0.24.0", path = "../arrow-tools" }
 flate2 = { version = "1.1.5", features = ["zlib-ng"] }
 
 [dev-dependencies]
