@@ -326,7 +326,7 @@ dependencies = [
 
 [[package]]
 name = "arrow-tools"
-version = "0.24.0"
+version = "0.24.1"
 dependencies = [
  "flate2",
  "libz-ng-sys",
@@ -572,7 +572,7 @@ dependencies = [
 
 [[package]]
 name = "csv2arrow"
-version = "0.24.0"
+version = "0.24.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -588,7 +588,7 @@ dependencies = [
 
 [[package]]
 name = "csv2parquet"
-version = "0.24.0"
+version = "0.24.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -773,7 +773,7 @@ dependencies = [
 
 [[package]]
 name = "json2arrow"
-version = "0.24.0"
+version = "0.24.1"
 dependencies = [
  "arrow",
  "arrow-schema",
@@ -787,7 +787,7 @@ dependencies = [
 
 [[package]]
 name = "json2parquet"
-version = "0.24.0"
+version = "0.24.1"
 dependencies = [
  "arrow",
  "arrow-schema",
