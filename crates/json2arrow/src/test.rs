@@ -3,6 +3,7 @@ use predicates::prelude::*;
 use std::process::Command;
 
 #[test]
+#[allow(deprecated)]
 fn get_schema() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("json2arrow")?;
 
@@ -33,6 +34,7 @@ fn get_schema() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+#[allow(deprecated)]
 fn get_schema_gz() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("json2arrow")?;
 
@@ -63,6 +65,7 @@ fn get_schema_gz() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+#[allow(deprecated)]
 fn help() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("json2arrow")?;
 
