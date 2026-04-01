@@ -226,7 +226,7 @@ fn main() -> Result<(), ParquetError> {
     }
 
     if let Some(size) = opts.max_row_group_size {
-        props = props.set_max_row_group_size(size);
+        props = props.set_max_row_group_row_count(Some(size));
     }
 
     if let Some(created_by) = opts.created_by {
