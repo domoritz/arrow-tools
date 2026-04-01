@@ -21,3 +21,5 @@ pr-run-mode = "plan"
 install-updater = false
 # Path that installers should place binaries in
 install-path = "CARGO_HOME"
+# Allow the CI files to differ from what dist would generate (action versions managed separately)
+allow-dirty = ["ci"]
