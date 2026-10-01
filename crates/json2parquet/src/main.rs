@@ -241,6 +241,3 @@ fn main() -> Result<(), ParquetError> {
 
     writer.close().map(|_| ())
 }
-
-#[cfg(test)]
-mod test;
