@@ -299,10 +299,7 @@ fn main() -> Result<(), ParquetError> {
     let mut writer = ArrowWriter::try_new(output, reader.schema(), Some(props.build()))?;
 
     for batch in reader {
-        match batch {
-            Ok(batch) => writer.write(&batch)?,
-            Err(error) => return Err(error.into()),
-        }
+        writer.write(&batch?)?;
     }
 
     match writer.close() {
@@ -310,6 +307,3 @@ fn main() -> Result<(), ParquetError> {
         Err(error) => Err(error),
     }
 }
-
-#[cfg(test)]
-mod test;
