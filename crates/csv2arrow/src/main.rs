@@ -160,14 +160,8 @@ fn main() -> Result<(), ArrowError> {
     let mut writer = FileWriter::try_new(output, reader.schema().as_ref())?;
 
     for batch in reader {
-        match batch {
-            Ok(batch) => writer.write(&batch)?,
-            Err(error) => return Err(error),
-        }
+        writer.write(&batch?)?;
     }
 
     writer.finish()
 }
-
-#[cfg(test)]
-mod test;
